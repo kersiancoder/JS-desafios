@@ -1,28 +1,34 @@
-
-
-
 function repetidorTexto() {
-    let veces = prompt("Ingrese un número del 1 al 50")
-    let texto = "Desafío 01 Maximiliano Heijo"
-   /*  while (!/^[0-9]+$/.test(veces)) {
-        alert("No ingresaste un número válido.")
-        veces = prompt("Ingrese un número")
-    } */
+    let nombre = prompt("Ingrese su nombre (solo letras)")
+    while (!/^[a-z\s]+$/.test(nombre)) {
+        alert("Nombre ingresado no válido")
+        nombre = prompt("Ingrese su nombre (solo letras)")
+    }  
     
-    if (veces => 50) {
-        console.log(veces)
-        alert("Ingrese un número menor de 50")
+    const MENSAJE = "¡HOLA " + (nombre).toUpperCase() + "!"
+    alert(MENSAJE)
+    let veces = prompt("Ingrese un número del 1 al 50")
+
+    while (!/^[0-9]+$/.test(veces) || veces > 50) {
+        alert("Número ingresado no válido")
         veces = prompt("Ingrese un número del 1 al 50")
+    }  
+        
+    for (let i=1;i<=veces;i) {
+        while (veces > 1) {
+            alert((nombre).toUpperCase() + " se repetirá " + veces-- + " veces.")
+        }
+        alert((nombre).toUpperCase() + " se repetirá " + veces-- + " vez.")
+    }
+
+    let menu = parseInt(prompt("Seleccione una opción: \n 1. Realizar nueva solicitud de datos \n 2. Salir"))
+    if (menu == 1) {
+        repetidorTexto()
     }
     else {
-        console.log("test")
-        for(let i=1;i<=veces;i){
-            while (veces > 1) {
-                alert(texto + " se repetirá " + veces-- + " veces.")
-            }
-            alert(texto + " se repetirá " + veces-- + " vez.")
-        }
+        alert("Gracias por participar.")
     }
-}
+} 
 
 repetidorTexto()
+
