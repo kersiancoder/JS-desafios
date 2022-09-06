@@ -1,6 +1,6 @@
 function repetidorTexto() {
     let nombre = prompt("Ingrese su nombre (solo letras)")
-    while (!/^[a-z\s]+$/.test(nombre)) {
+    while (!/^[a-zA-Z\s]+$/.test(nombre)) {
         alert("Nombre ingresado no válido")
         nombre = prompt("Ingrese su nombre (solo letras)")
     }  
