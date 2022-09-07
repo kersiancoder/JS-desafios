@@ -16,7 +16,7 @@ class Vehiculo {
 function agregarVehiculos() {
     let numeroVehiculos = parseInt(
         prompt("¿Cuántos vehículos necesita agregar?"))
-        while (!/^[0-9\s]+$/.test(numeroVehiculos)) {
+        while (!/^[0-9]+$/.test(numeroVehiculos)) {
             alert("Número no reconocido")
             numeroVehiculos = prompt("¿Cuántos vehículos necesita agregar?")
         }  
@@ -24,14 +24,20 @@ function agregarVehiculos() {
     let vehiculos = [];
     for (let index = 0; index < numeroVehiculos; index++) {
         let marca = prompt("Ingrese la marca")
+        while (marca === "") {
+            marca = prompt("Ingrese la marca") 
+        }
         let modelo = prompt("Ingrese el modelo")
+        while (modelo === "") {
+            modelo = prompt("Ingrese el modelo") 
+        }
         let anio = parseInt(prompt("Ingrese el año"))
-        while (!/^[0-9\s]+$/.test(anio)) {
+        while (!/^[0-9]+$/.test(anio)) {
             alert("Número no reconocido")
             anio = prompt("Ingrese el año")
         }  
         let ocupantes = parseInt(prompt("Ingrese cantidad de ocupantes"))
-        while (!/^[0-9\s]+$/.test(ocupantes)) {
+        while (!/^[0-9]+$/.test(ocupantes)) {
             alert("Número no reconocido")
             ocupantes = prompt("Ingrese cantidad de ocupantes")
         }   
@@ -43,7 +49,7 @@ function agregarVehiculos() {
             tipo = "Auto/Camioneta"
         }
         let precioCompra = parseInt(prompt("Ingrese el precio de compra en U$S"))
-        while (!/^[0-9\s]+$/.test(precioCompra)) {
+        while (!/^[0-9]+$/.test(precioCompra)) {
             alert("Número no reconocido")
             precioCompra = prompt("Ingrese el precio de compra en U$S")
         }   
@@ -106,8 +112,7 @@ function main() {
     let ventaVehiculos = calcularVenta(vehiculos)
     let gananciaVehiculos = calcularGanancia(vehiculos)
     alert("El costo total de los vehículos es de: "+ costoVehiculos +" U$S. \nLa venta total de los vehículos es de: "+ ventaVehiculos +" U$S. \nLa ganancia total de los vehículos es de: " + gananciaVehiculos + " U$S")
-    console.log("El costo total de los vehículos es de: "+ costoVehiculos +" U$S. \nLa venta total de los vehículos es de: "+ ventaVehiculos +" U$S. \nLa ganancia total de los vehículos es de: " + gananciaVehiculos + " U$S")
-
+            console.log("El costo total de los vehículos es de: "+ costoVehiculos +" U$S. \nLa venta total de los vehículos es de: "+ ventaVehiculos +" U$S. \nLa ganancia total de los vehículos es de: " + gananciaVehiculos + " U$S")
 let menu
 
 do {
@@ -122,6 +127,7 @@ do {
             break
         case 3:
             alert("Gracias por tu visita.")
+        
             break
     }
 } while (menu !== 3)
