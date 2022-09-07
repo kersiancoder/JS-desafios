@@ -15,14 +15,26 @@ class Vehiculo {
 
 function agregarVehiculos() {
     let numeroVehiculos = parseInt(
-        prompt("Cuantos vehículos necesita agregar")
-    )
+        prompt("¿Cuántos vehículos necesita agregar?"))
+        while (!/^[0-9\s]+$/.test(numeroVehiculos)) {
+            alert("Número no reconocido")
+            numeroVehiculos = prompt("¿Cuántos vehículos necesita agregar?")
+        }  
+    
     let vehiculos = [];
     for (let index = 0; index < numeroVehiculos; index++) {
         let marca = prompt("Ingrese la marca")
         let modelo = prompt("Ingrese el modelo")
         let anio = parseInt(prompt("Ingrese el año"))
-        let ocupantes = parseInt(prompt("Ingrese cantidad de ocupantes"))  
+        while (!/^[0-9\s]+$/.test(anio)) {
+            alert("Número no reconocido")
+            anio = prompt("Ingrese el año")
+        }  
+        let ocupantes = parseInt(prompt("Ingrese cantidad de ocupantes"))
+        while (!/^[0-9\s]+$/.test(ocupantes)) {
+            alert("Número no reconocido")
+            ocupantes = prompt("Ingrese cantidad de ocupantes")
+        }   
         let tipo = "Moto/Autito"
         if (ocupantes > 6) {
             tipo = "Camioneta/Bus"
@@ -31,6 +43,10 @@ function agregarVehiculos() {
             tipo = "Auto/Camioneta"
         }
         let precioCompra = parseInt(prompt("Ingrese el precio de compra en U$S"))
+        while (!/^[0-9\s]+$/.test(precioCompra)) {
+            alert("Número no reconocido")
+            precioCompra = prompt("Ingrese el precio de compra en U$S")
+        }   
         let nuevo = false
         let precioVenta = precioCompra * 1.5
             if (anio == 2022) {
