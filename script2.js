@@ -88,14 +88,14 @@ function agregarVehiculos() {
     return vehiculos
 }
 
+let contenedorVehiculos = document.getElementById("contenedor-vehiculos")
+
 //Mostrando listado de vehículos en consola y HTML.
 function mostrarVehiculos(vehiculos) {
     
     for (const vehiculo of vehiculos) {
         console.log(vehiculo)
         console.log(vehiculo.marca + " " + vehiculo.modelo + " " + vehiculo.anio)
-
-        const contenedorVehiculos = document.getElementById("contenedor-vehiculos")
         let column = document.createElement("div")
         column.className = "col-md-4 mt-3"
         column.id = `columna-${vehiculo.modelo}`
@@ -115,8 +115,27 @@ function mostrarVehiculos(vehiculos) {
     }
 }
 
+//Si no hay vehículos mostramos lo siguiente
+function sinVehiculos(vehiculos) {
+    
+    for (const vehiculo of vehiculos) {
+        contenedorVehiculos = document.getElementById("contenedor-vehiculos")
+        let column = document.createElement("div")
+        column.className = "col mt-3"
+        column.id = "columna"
+        column.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-text text-center"><b>No hay vehículos que concuerden con el filtro.</b></h3>
+            </div>
+        </div>
+        `
+        contenedorVehiculos.append(column) 
+    }
+}
+
     //Código que no funciona
-  /*   const contenedorVehiculos2 = document.getElementById("contenedor-vehiculos")
+/*   const contenedorVehiculos2 = document.getElementById("contenedor-vehiculos")
     vehiculos.forEach((vehiculo) => {
         let column2 = document.createElement("div")
         column2.className = "col-md-4 mt-3"
@@ -159,6 +178,17 @@ function calcularVenta(vehiculos) {
     return sumatoriaVenta;
 }
 
+//Chequeamos si un array es un array y si está vacío
+function arrayVacio(array) {
+    if (!Array.isArray(array)) {
+        return FALSE;
+    }
+    if (array.length == 0) {
+        return true;
+    }
+    return false;
+}
+
 //Llamamos al código anteriormente en la función main + menú para ingresar nuevos vehículos o terminar con la operación.
 function main() {
     vehiculos = agregarVehiculos()
@@ -186,23 +216,41 @@ do {
             switch (menuFiltro) {
                 case 1:
                         let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
-                        console.log("Vehículos nuevos:") 
-                        console.log(vehiculosFiltradosNuevos) 
-                        mostrarVehiculos(vehiculosFiltradosNuevos)
+                        if (arrayVacio(vehiculosFiltradosNuevos) === true) {
+                            console.log("No hay vehículos que concuerden con el filtro.")
+                            sinVehiculos(vehiculos)
+                        }
+                        else {
+                            console.log("Vehículos nuevos:") 
+                            console.log(vehiculosFiltradosNuevos) 
+                            mostrarVehiculos(vehiculosFiltradosNuevos)
+                    }                       
                         menu = 4
                     break
                 case 2:
                         let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
-                        console.log("Vehículos usados:") 
-                        console.log(vehiculosFiltradosUsados) 
-                        mostrarVehiculos(vehiculosFiltradosUsados)
+                        if (arrayVacio(vehiculosFiltradosUsados) === true) {
+                            console.log("No hay vehículos que concuerden con el filtro.")
+                            sinVehiculos(vehiculos)
+                        }
+                        else {
+                            console.log("Vehículos usados:") 
+                            console.log(vehiculosFiltradosUsados) 
+                            mostrarVehiculos(vehiculosFiltradosUsados)
+                    } 
                         menu = 4
                     break
                 case 3:
                         let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
-                        console.log("Vehículos con más de 6 ocupantes:") 
-                        console.log(vehiculosFiltradosOcupantes) 
-                        mostrarVehiculos(vehiculosFiltradosOcupantes)
+                        if (arrayVacio(vehiculosFiltradosOcupantes) === true) {
+                            console.log("No hay vehículos que concuerden con el filtro.")
+                            sinVehiculos(vehiculos)
+                        }
+                        else {
+                            console.log("Vehículos con más de 6 ocupantes:") 
+                            console.log(vehiculosFiltradosOcupantes) 
+                            mostrarVehiculos(vehiculosFiltradosOcupantes)
+                    } 
                         menu = 4
                     break
                 case 4:
