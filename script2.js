@@ -92,7 +92,7 @@ function agregarVehiculos() {
 //Mostrando listado de vehículos en consola y HTML.
 let contenedorVehiculos = document.getElementById("contenedor-vehiculos")
 let vehiculosVenta = document.getElementById("vehiculos-venta")
-vehiculosVenta.innerHTML = "Vehículos a la venta:"
+vehiculosVenta.innerHTML = "Vehículos a la venta"
 
 function mostrarVehiculos(vehiculos) {
     for (const vehiculo of vehiculos) {
@@ -120,7 +120,7 @@ function mostrarVehiculos(vehiculos) {
         ventasTotal.innerHTML = `
         <h3 class="card-text text-center"><b>El costo de todos los vehículos suma: ${costoVehiculos} U$S</b></h3>
         <h3 class="card-text text-center"><b>La venta de todos los vehículos suma: ${ventaVehiculos} U$S</b></h3>
-        <h3 class="card-text text-center"><b>La venta de todos los vehículos suma: ${gananciaVehiculos} U$S</b></h3>
+        <h3 class="card-text text-center"><b>La ganancia de todos los vehículos suma: ${gananciaVehiculos} U$S</b></h3>
         `
         contenedorVehiculos.append(column) 
     }
