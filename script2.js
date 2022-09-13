@@ -1,9 +1,10 @@
 //Clase para crear los vehículos.
 class Vehiculo {
-    constructor(marca, modelo, anio, nuevo, tipo, ocupantes, precioCompra, precioVenta) {
+    constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta) {
         this.marca = marca.toUpperCase()
         this.modelo = modelo.toUpperCase()
         this.anio = anio
+        this.km = km
         this.nuevo = nuevo
         this.tipo = tipo
         this.ocupantes = ocupantes
@@ -13,6 +14,8 @@ class Vehiculo {
     calcularCosto = () => this.precioCompra
     calcularVenta = () => this.precioVenta
 }
+
+let vehiculos = []
 
 //Agregando vehículos mediante prompt a la clase Vehiculo.
 function agregarVehiculos() {
@@ -24,7 +27,6 @@ function agregarVehiculos() {
         }  
     
     //Creando array de vehículos
-    let vehiculos = []
     for (let index = 0; index < numeroVehiculos; index++) {
         let marca = prompt("Ingrese la marca")
         while (marca === "") {
@@ -38,6 +40,11 @@ function agregarVehiculos() {
         while (!/^[0-9]+$/.test(anio)) {
             alert("Número no reconocido")
             anio = prompt("Ingrese el año")
+        }  
+        let km = parseInt(prompt("Ingrese el kilometraje"))
+        while (!/^[0-9]+$/.test(km)) {
+            alert("Número no reconocido")
+            km = prompt("Ingrese el kilometraje")
         }  
         let ocupantes = parseInt(prompt("Ingrese cantidad de ocupantes"))
         while (!/^[0-9]+$/.test(ocupantes)) {
@@ -60,7 +67,7 @@ function agregarVehiculos() {
         //Calculamos si el vehículo es nuevo o usado mediante el año ingresado, para calcular el precioVenta (x 1.5 o x 2).
         let nuevo = false
         let precioVenta = precioCompra * 1.5
-            if (anio == 2022) {
+            if (km == 0) {
                 nuevo = true
                 precioVenta = precioCompra * 2
             }
@@ -69,6 +76,7 @@ function agregarVehiculos() {
         marca,
         modelo,
         anio,
+        km,
         nuevo,
         tipo,
         ocupantes,
@@ -80,13 +88,58 @@ function agregarVehiculos() {
     return vehiculos
 }
 
-//Mostrando listado de vehículos en consola.
+//Mostrando listado de vehículos en consola y HTML.
 function mostrarVehiculos(vehiculos) {
+    
     for (const vehiculo of vehiculos) {
         console.log(vehiculo)
         console.log(vehiculo.marca + " " + vehiculo.modelo + " " + vehiculo.anio)
+
+        const contenedorVehiculos = document.getElementById("contenedor-vehiculos")
+        let column = document.createElement("div")
+        column.className = "col-md-4 mt-3"
+        column.id = `columna-${vehiculo.modelo}`
+        column.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">Marca: <b>${vehiculo.marca}</b></p>
+                <p class="card-text">Modelo: <b>${vehiculo.modelo}</b></p>
+                <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+                <p class="card-text">Kilometraje: <b>${vehiculo.km} Kms</b></p>
+                <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+                <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
+            </div>
+        </div>
+        `
+        contenedorVehiculos.append(column) 
     }
 }
+
+    //Código que no funciona
+  /*   const contenedorVehiculos2 = document.getElementById("contenedor-vehiculos")
+    vehiculos.forEach((vehiculo) => {
+        let column2 = document.createElement("div")
+        column2.className = "col-md-4 mt-3"
+        column2.id = `columna-${vehiculo.modelo}`
+        column2.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">Marca: <b>${vehiculo.marca}</b></p>
+                <p class="card-text">Modelo: <b>${vehiculo.modelo}</b></p>
+                <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+                <p class="card-text">Kilometraje: <b>${vehiculo.km} Kms</b></p>
+                <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+                <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
+            </div>
+        </div>
+        `
+        contenedorVehiculos2.append(column2)
+    })    */
+
+
+//Cambiando el título en HTML
+let vehiculosVenta = document.getElementById("vehiculos-venta")
+vehiculosVenta.innerHTML = "Vehículos a la venta:"
 
 //Calculamos el costo de los vehículos ingresados anteriormente.
 function calcularCosto(vehiculos) {
@@ -108,43 +161,49 @@ function calcularVenta(vehiculos) {
 
 //Llamamos al código anteriormente en la función main + menú para ingresar nuevos vehículos o terminar con la operación.
 function main() {
-    let vehiculos = agregarVehiculos()
-    mostrarVehiculos(vehiculos)
+    vehiculos = agregarVehiculos()
     let costoVehiculos = calcularCosto(vehiculos)
     let ventaVehiculos = calcularVenta(vehiculos)
     let gananciaVehiculos = ventaVehiculos - costoVehiculos
     alert("El costo total de los vehículos es de: "+ costoVehiculos +" U$S. \nLa venta total de los vehículos es de: "+ ventaVehiculos +" U$S. \nLa ganancia total de los vehículos es de: " + gananciaVehiculos + " U$S")
     console.log("El costo total de los vehículos es de: "+ costoVehiculos +" U$S. \nLa venta total de los vehículos es de: "+ ventaVehiculos +" U$S. \nLa ganancia total de los vehículos es de: " + gananciaVehiculos + " U$S")
+
 let menu
 
 do {
-    menu = parseInt(prompt("Elige una opción: \n 1. Agregar más vehículos \n 2. Información de cálculo del precio de venta de vehículos \n 3. Filtrar vehículos\n 4. Finalizar"))
+    menu = parseInt(prompt("Elige una opción: \n 1. Agregar más vehículos \n 2. Información de cálculo del precio de venta de vehículos \n 3. Filtrar vehículos\n 4. Finalizar (Imprimir datos en consola y HTML)"))
     switch (menu) {
         case 1:
             main()
             menu = 4
             break
         case 2:
-            alert("IMPORTANTE: Para calcular el precio de venta se contempla si el vehículo es Nuevo (Año 2022) o usado. \nPara vehículos nuevos el precio de venta es el doble del costo. \nMientras que para vehículos usados es del 50% del precio de costo.")
+            alert("IMPORTANTE: Para calcular el precio de venta se contempla si el vehículo es 0 Km. o usado. \nPara vehículos nuevos el precio de venta es el doble del costo. \nMientras que para vehículos usados es del 50% del precio de costo.")
             break
         case 3:
             //Filtrando objetos con filtros predefinidos
-            menuFiltro =  parseInt(prompt("Elige una opción: \n 1. Filtrar vehículos nuevos en consola \n 2. Filtrar vehículos usados en consola \n 3. Filtrar vehículos de más de 6 pasajeros \n 4. Volver"))
+            menuFiltro =  parseInt(prompt("Elige una opción: \n 1. Filtrar vehículos nuevos en consola y HTML \n 2. Filtrar vehículos usados en consola y HTML \n 3. Filtrar vehículos de más de 6 pasajeros en consola y HTML \n 4. Volver"))
             switch (menuFiltro) {
                 case 1:
-                        let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.anio >= 2022)
-                        console.log("Vehículos nuevos (Año 2022):") 
+                        let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
+                        console.log("Vehículos nuevos:") 
                         console.log(vehiculosFiltradosNuevos) 
+                        mostrarVehiculos(vehiculosFiltradosNuevos)
+                        menu = 4
                     break
                 case 2:
-                        let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.anio < 2022)
+                        let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
                         console.log("Vehículos usados:") 
                         console.log(vehiculosFiltradosUsados) 
+                        mostrarVehiculos(vehiculosFiltradosUsados)
+                        menu = 4
                     break
                 case 3:
                         let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
                         console.log("Vehículos con más de 6 ocupantes:") 
                         console.log(vehiculosFiltradosOcupantes) 
+                        mostrarVehiculos(vehiculosFiltradosOcupantes)
+                        menu = 4
                     break
                 case 4:
                     menu
@@ -153,6 +212,7 @@ do {
             break
         case 4:
             alert("Gracias por tu visita.")
+            mostrarVehiculos(vehiculos)
             break
     }
 } while (menu !== 4)
