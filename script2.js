@@ -88,11 +88,12 @@ function agregarVehiculos() {
     return vehiculos
 }
 
-let contenedorVehiculos = document.getElementById("contenedor-vehiculos")
-
 //Mostrando listado de vehículos en consola y HTML.
+let contenedorVehiculos = document.getElementById("contenedor-vehiculos")
+let vehiculosVenta = document.getElementById("vehiculos-venta")
+vehiculosVenta.innerHTML = "Vehículos a la venta:"
+
 function mostrarVehiculos(vehiculos) {
-    
     for (const vehiculo of vehiculos) {
         console.log(vehiculo)
         console.log(vehiculo.marca + " " + vehiculo.modelo + " " + vehiculo.anio)
@@ -111,6 +112,8 @@ function mostrarVehiculos(vehiculos) {
             </div>
         </div>
         `
+        let ventasTotal = document.getElementById("ventas-total")
+        ventasTotal.innerHTML = `<h3 class="card-text text-center"><b>La venta de todos los vehículos suma: ${calcularVenta(vehiculos)}</b></h3>`
         contenedorVehiculos.append(column) 
     }
 }
@@ -154,10 +157,6 @@ function sinVehiculos(vehiculos) {
         `
         contenedorVehiculos2.append(column2)
     })    */
-
-//Cambiando el título en HTML
-let vehiculosVenta = document.getElementById("vehiculos-venta")
-vehiculosVenta.innerHTML = "Vehículos a la venta:"
 
 //Calculamos el costo de los vehículos ingresados anteriormente.
 function calcularCosto(vehiculos) {
