@@ -134,7 +134,7 @@ function sinVehiculos(vehiculos) {
     }
 }
 
-    //Código que no funciona
+//Código que no funciona
 /*   const contenedorVehiculos2 = document.getElementById("contenedor-vehiculos")
     vehiculos.forEach((vehiculo) => {
         let column2 = document.createElement("div")
@@ -154,7 +154,6 @@ function sinVehiculos(vehiculos) {
         `
         contenedorVehiculos2.append(column2)
     })    */
-
 
 //Cambiando el título en HTML
 let vehiculosVenta = document.getElementById("vehiculos-venta")
