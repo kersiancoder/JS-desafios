@@ -125,9 +125,9 @@ function mostrarVehiculos(vehiculos) {
         `
         let ventasTotal = document.getElementById("ventas-total")
         ventasTotal.innerHTML = `
-        <h3 class="card-text text-center"><b>El costo de los vehículos es de ${costoVehiculos} U$S</b></h3>
-        <h3 class="card-text text-center"><b>La venta de los vehículos es de ${ventaVehiculos} U$S</b></h3>
-        <h3 class="card-text text-center"><b>La ganancia de los vehículos es de ${gananciaVehiculos} U$S</b></h3>
+        <h3 class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></h3>
+        <h3 class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></h3>
+        <h3 class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></h3>
         `
         contenedorVehiculos.append(column) 
     })
@@ -188,7 +188,7 @@ function main() {
     let ventaVehiculos = calcularVenta(vehiculos)
     let gananciaVehiculos = ventaVehiculos - costoVehiculos
     alert("El costo total de los vehículos es de: "+ costoVehiculos +" U$S. \nLa venta total de los vehículos es de: "+ ventaVehiculos +" U$S. \nLa ganancia total de los vehículos es de: " + gananciaVehiculos + " U$S")
-    console.log("El costo total de los vehículos es de: "+ costoVehiculos +" U$S. \nLa venta total de los vehículos es de: "+ ventaVehiculos +" U$S. \nLa ganancia total de los vehículos es de: " + gananciaVehiculos + " U$S")
+    console.log("El costo de todos los vehículos ingresados es de "+ costoVehiculos +" U$S. \nLa venta de todos los vehículos ingresados es de "+ ventaVehiculos +" U$S. \nLa ganancia de todos los vehículos ingresados es de  " + gananciaVehiculos + " U$S")
 
 let menu
 
