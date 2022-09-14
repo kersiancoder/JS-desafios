@@ -188,7 +188,7 @@ function main() {
     let ventaVehiculos = calcularVenta(vehiculos)
     let gananciaVehiculos = ventaVehiculos - costoVehiculos
     alert("El costo total de los vehículos es de: "+ costoVehiculos +" U$S. \nLa venta total de los vehículos es de: "+ ventaVehiculos +" U$S. \nLa ganancia total de los vehículos es de: " + gananciaVehiculos + " U$S")
-    console.log("El costo de todos los vehículos ingresados es de"+ costoVehiculos +" U$S. \nLa venta de todos los vehículos ingresados es de"+ ventaVehiculos +" U$S. \nLa ganancia de todos los vehículos ingresados es de" + gananciaVehiculos + " U$S")
+    console.log("El costo de todos los vehículos ingresados es de "+ costoVehiculos +" U$S. \nLa venta de todos los vehículos ingresados es de "+ ventaVehiculos +" U$S. \nLa ganancia de todos los vehículos ingresados es de " + gananciaVehiculos + " U$S")
 
 let menu
 
