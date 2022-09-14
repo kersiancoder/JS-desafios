@@ -88,14 +88,21 @@ function agregarVehiculos() {
     return vehiculos
 }
 
+//Mostrando todos en consola
+function mostrarVehiculosConsola(vehiculos) {
+    vehiculos.forEach((vehiculo) => {
+        console.log(vehiculo)
+        console.log(vehiculo.marca + " " + vehiculo.modelo + " " + vehiculo.anio)
+    })
+}
 
 //Mostrando listado de vehículos en consola y HTML.
 let contenedorVehiculos = document.getElementById("contenedor-vehiculos")
 let vehiculosVenta = document.getElementById("vehiculos-venta")
-vehiculosVenta.innerHTML = "Vehículos a la venta:"
+vehiculosVenta.innerHTML = "Vehículos a la venta"
 
 function mostrarVehiculos(vehiculos) {
-    for (const vehiculo of vehiculos) {
+    vehiculos.forEach((vehiculo) => {
         let costoVehiculos = calcularCosto(vehiculos)
         let ventaVehiculos = calcularVenta(vehiculos)
         let gananciaVehiculos = ventaVehiculos - costoVehiculos
@@ -118,12 +125,12 @@ function mostrarVehiculos(vehiculos) {
         `
         let ventasTotal = document.getElementById("ventas-total")
         ventasTotal.innerHTML = `
-        <h3 class="card-text text-center"><b>El costo de todos los vehículos suma: ${costoVehiculos} U$S</b></h3>
-        <h3 class="card-text text-center"><b>La venta de todos los vehículos suma: ${ventaVehiculos} U$S</b></h3>
-        <h3 class="card-text text-center"><b>La venta de todos los vehículos suma: ${gananciaVehiculos} U$S</b></h3>
+        <h3 class="card-text text-center"><b>El costo de los vehículos es de ${costoVehiculos} U$S</b></h3>
+        <h3 class="card-text text-center"><b>La venta de los vehículos es de ${ventaVehiculos} U$S</b></h3>
+        <h3 class="card-text text-center"><b>La ganancia de los vehículos es de ${gananciaVehiculos} U$S</b></h3>
         `
         contenedorVehiculos.append(column) 
-    }
+    })
 }
 
 //Si no hay vehículos mostramos lo siguiente
@@ -144,27 +151,6 @@ function sinVehiculos(vehiculos) {
         contenedorVehiculos.append(column) 
     }
 }
-
-//Código que no funciona
-/*   const contenedorVehiculos2 = document.getElementById("contenedor-vehiculos")
-    vehiculos.forEach((vehiculo) => {
-        let column2 = document.createElement("div")
-        column2.className = "col-md-4 mt-3"
-        column2.id = `columna-${vehiculo.modelo}`
-        column2.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text">Marca: <b>${vehiculo.marca}</b></p>
-                <p class="card-text">Modelo: <b>${vehiculo.modelo}</b></p>
-                <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
-                <p class="card-text">Kilometraje: <b>${vehiculo.km} Kms</b></p>
-                <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
-                <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
-            </div>
-        </div>
-        `
-        contenedorVehiculos2.append(column2)
-    })    */
 
 //Calculamos el costo de los vehículos ingresados anteriormente.
 function calcularCosto(vehiculos) {
@@ -221,6 +207,7 @@ do {
             menuFiltro =  parseInt(prompt("Elige una opción: \n 1. Filtrar vehículos nuevos en consola y HTML \n 2. Filtrar vehículos usados en consola y HTML \n 3. Filtrar vehículos de más de 6 pasajeros en consola y HTML \n 4. Volver"))
             switch (menuFiltro) {
                 case 1:
+                        mostrarVehiculosConsola(vehiculos)
                         let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
                         if (arrayVacio(vehiculosFiltradosNuevos) === true) {
                             console.log("No hay vehículos que concuerden con el filtro.")
@@ -228,12 +215,12 @@ do {
                         }
                         else {
                             console.log("Vehículos nuevos:") 
-                            console.log(vehiculosFiltradosNuevos) 
                             mostrarVehiculos(vehiculosFiltradosNuevos)
                     }                       
                         menu = 4
                     break
                 case 2:
+                        mostrarVehiculosConsola(vehiculos)  
                         let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
                         if (arrayVacio(vehiculosFiltradosUsados) === true) {
                             console.log("No hay vehículos que concuerden con el filtro.")
@@ -241,12 +228,12 @@ do {
                         }
                         else {
                             console.log("Vehículos usados:") 
-                            console.log(vehiculosFiltradosUsados) 
                             mostrarVehiculos(vehiculosFiltradosUsados)
                     } 
                         menu = 4
                     break
                 case 3:
+                        mostrarVehiculosConsola(vehiculos)
                         let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
                         if (arrayVacio(vehiculosFiltradosOcupantes) === true) {
                             console.log("No hay vehículos que concuerden con el filtro.")
@@ -254,7 +241,6 @@ do {
                         }
                         else {
                             console.log("Vehículos con más de 6 ocupantes:") 
-                            console.log(vehiculosFiltradosOcupantes) 
                             mostrarVehiculos(vehiculosFiltradosOcupantes)
                     } 
                         menu = 4
