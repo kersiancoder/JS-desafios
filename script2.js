@@ -125,15 +125,9 @@ function mostrarVehiculos(vehiculos) {
         `
         let ventasTotal = document.getElementById("ventas-total")
         ventasTotal.innerHTML = `
-<<<<<<< HEAD
         <h3 class="card-text text-center"><b>El costo de los vehículos es de ${costoVehiculos} U$S</b></h3>
         <h3 class="card-text text-center"><b>La venta de los vehículos es de ${ventaVehiculos} U$S</b></h3>
         <h3 class="card-text text-center"><b>La ganancia de los vehículos es de ${gananciaVehiculos} U$S</b></h3>
-=======
-        <h3 class="card-text text-center"><b>El costo de todos los vehículos suma: ${costoVehiculos} U$S</b></h3>
-        <h3 class="card-text text-center"><b>La venta de todos los vehículos suma: ${ventaVehiculos} U$S</b></h3>
-        <h3 class="card-text text-center"><b>La ganancia de todos los vehículos suma: ${gananciaVehiculos} U$S</b></h3>
->>>>>>> 06e097fa0c19d4741f967e744799d8e3b308d4ef
         `
         contenedorVehiculos.append(column) 
     })
