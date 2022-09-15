@@ -403,7 +403,7 @@ function sinVehiculos() {
         contenedorVehiculos.innerHTML = `
         <div class="card">
             <div class="card-body">
-                <h3 class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></h3>
+                <p class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></p>
             </div>
         </div>
         `;
@@ -421,6 +421,7 @@ function eliminarVehiculo(idVehiculo) {
     vehiculos.splice(indiceBorrar, 1);
     columnaBorrar.remove();
     mostrarVehiculos();
+    filtro4.click()
     if (arrayVacio(vehiculos) === true) {
         sinVehiculos()
     }
