@@ -17,6 +17,7 @@ let filtro2;
 let filtro3;
 let filtro4;
 
+//Clase para crear los vehículos.
 class Vehiculo {
     constructor(id, marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta) {
         this.id = id
@@ -34,6 +35,7 @@ class Vehiculo {
     calcularVenta = () => this.precioVenta
 }
 
+//Inicializamos los elementos.
 function inicializarElementos() {
     formulario = document.getElementById("formulario");
     inputId = document.getElementById("inputId");
@@ -51,10 +53,12 @@ function inicializarElementos() {
     filtro4 = document.getElementById("filtro4");
 }
 
+//Inicializamos los eventos.
 function inicializarEventos() {
     formulario.onsubmit = (event) => validarFormulario(event);
 }
 
+//Validamos el formulario.
 function validarFormulario(event) {
     event.preventDefault();
     let idVehiculo = inputId.value;
@@ -101,6 +105,7 @@ function validarFormulario(event) {
     }
 }
 
+//Mostramos los vehículos en el HTML y consola.
 function mostrarVehiculos() {
     contenedorVehiculos.innerHTML = "";
     console.log(vehiculos)
@@ -139,7 +144,7 @@ function mostrarVehiculos() {
     contenedorVehiculos.append(column);
 
     let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-    botonEliminar.onclick = () => eliminarProducto(vehiculo.id);
+    botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
     filtro1.onclick = () => filtrarNuevos()
     filtro2.onclick = () => filtrarUsados()
@@ -148,6 +153,7 @@ function mostrarVehiculos() {
     });    
 }
 
+//Filtramos los vehículos nuevos.
 function filtrarNuevos() {
     let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
     if (arrayVacio(vehiculosFiltradosNuevos) === true) {
@@ -194,7 +200,7 @@ function filtrarNuevos() {
     contenedorVehiculos.append(column);
 
     let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-    botonEliminar.onclick = () => eliminarProducto(vehiculo.id);
+    botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
     filtro1.onclick = () => filtrarNuevos()
     filtro2.onclick = () => filtrarUsados()
@@ -204,6 +210,7 @@ function filtrarNuevos() {
     }
 }
 
+//Filtramos los vehículos usados.
 function filtrarUsados() {
     let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
     if (arrayVacio(vehiculosFiltradosUsados) === true) {
@@ -250,7 +257,7 @@ function filtrarUsados() {
     contenedorVehiculos.append(column);
 
     let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-    botonEliminar.onclick = () => eliminarProducto(vehiculo.id);
+    botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
     filtro1.onclick = () => filtrarNuevos()
     filtro2.onclick = () => filtrarUsados()
@@ -260,6 +267,7 @@ function filtrarUsados() {
 }  
 }
 
+//Filtramos los vehículos con más de 6 ocupantes.
 function filtrarOcupantes() {
     let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
     if (arrayVacio(vehiculosFiltradosOcupantes) === true) {
@@ -307,7 +315,7 @@ function filtrarOcupantes() {
     contenedorVehiculos.append(column);
 
     let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-    botonEliminar.onclick = () => eliminarProducto(vehiculo.id);
+    botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
     filtro1.onclick = () => filtrarNuevos()
     filtro2.onclick = () => filtrarUsados()
@@ -329,7 +337,7 @@ function arrayVacio(array) {
     return false;
 }
 
-
+//Si el filtro no encuentra vehículos mostramos en el HTML un texto.
 function sinVehiculos() {
     for (const vehiculo of vehiculos) {
         contenedorVehiculos.innerHTML = "";
@@ -348,8 +356,8 @@ function sinVehiculos() {
     }
 }
 
-
-function eliminarProducto(idVehiculo) {
+//Eliminando un vehículo con el botón
+function eliminarVehiculo(idVehiculo) {
     let columnaBorrar = document.getElementById(`columna-${idVehiculo}`);
     let indiceBorrar = vehiculos.findIndex(
     (vehiculo) => Number(vehiculo.id) === Number(idVehiculo)
@@ -363,7 +371,7 @@ function eliminarProducto(idVehiculo) {
     }
 }
 
-
+//Inicializamos el programa.
 function main() {
     inicializarElementos();
     inicializarEventos();
