@@ -11,6 +11,7 @@ let inputTipo;
 let inputOcupantes;
 let inputPrecioCompra;
 let contenedorVehiculos;
+let contenedorVentas;
 let filtros;
 let filtro1;
 let filtro2;
@@ -46,11 +47,13 @@ function inicializarElementos() {
     inputOcupantes = document.getElementById("inputOcupantes");
     inputPrecioCompra = document.getElementById("inputPrecioCompra");
     contenedorVehiculos = document.getElementById("contenedor-vehiculos");
+    contenedorVentas = document.getElementById("ventas-total");
     filtros = document.getElementById("filtros");
     filtro1 = document.getElementById("filtro1"); 
     filtro2 = document.getElementById("filtro2");
     filtro3 = document.getElementById("filtro3");
     filtro4 = document.getElementById("filtro4");
+    
 }
 
 //Inicializamos los eventos.
@@ -105,12 +108,38 @@ function validarFormulario(event) {
     }
 }
 
+function calcularCosto(vehiculos) {
+    let sumatoriaCosto = 0
+    for (const vehiculo of vehiculos) {
+        sumatoriaCosto += vehiculo.calcularCosto()
+    }
+    return sumatoriaCosto;
+}
+
+//Calculamos la venta total de los vehículos ingresados.
+function calcularVenta(vehiculos) {
+    let sumatoriaVenta = 0
+    for (const vehiculo of vehiculos) {
+        sumatoriaVenta += vehiculo.calcularVenta()
+    }
+    return sumatoriaVenta;
+}
+
+
 //Mostramos los vehículos en el HTML y consola.
 function mostrarVehiculos() {
+    if (arrayVacio(vehiculos) === true) {
+        sinVehiculos()
+    }
+    else {
     contenedorVehiculos.innerHTML = "";
+    contenedorVentas.innerHTML = "";
     console.log(vehiculos)
 
     vehiculos.forEach((vehiculo) => {
+    let costoVehiculos = calcularCosto(vehiculos)
+    let ventaVehiculos = calcularVenta(vehiculos)
+    let gananciaVehiculos = ventaVehiculos - costoVehiculos
     let column = document.createElement("div");
     column.className = "col-md-4 mt-3 mb-3";
     column.id = `columna-${vehiculo.id}`;
@@ -132,6 +161,9 @@ function mostrarVehiculos() {
                 <p class="card-text">Tipo:
                     <b>${vehiculo.tipo}</b>
                 </p>
+                <p class="card-text">Precio Compra:
+                    <b>${vehiculo.precioCompra}</b>
+                </p>
                 <p class="card-text">Precio Venta:
                     <b>${vehiculo.precioVenta}</b>
                 </p>
@@ -140,6 +172,12 @@ function mostrarVehiculos() {
             <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
                 </div>
         </div>`;
+
+        contenedorVentas.innerHTML = `
+        <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
+        <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
+        <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
+        `
 
     contenedorVehiculos.append(column);
 
@@ -152,12 +190,12 @@ function mostrarVehiculos() {
     filtro4.onclick = () => mostrarVehiculos()
     });    
 }
+}
 
 //Filtramos los vehículos nuevos.
 function filtrarNuevos() {
     let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
     if (arrayVacio(vehiculosFiltradosNuevos) === true) {
-        console.log("No hay vehículos que concuerden con el filtro.")
         sinVehiculos()
     }
     else {
@@ -167,6 +205,9 @@ function filtrarNuevos() {
     contenedorVehiculos.innerHTML = "";
 
     vehiculosFiltradosNuevos.forEach((vehiculo) => {
+    let costoVehiculos = calcularCosto(vehiculosFiltradosNuevos)
+    let ventaVehiculos = calcularVenta(vehiculosFiltradosNuevos)
+    let gananciaVehiculos = ventaVehiculos - costoVehiculos
     let column = document.createElement("div");
     column.className = "col-md-4 mt-3 mb-3";
     column.id = `columna-${vehiculo.id}`;
@@ -196,6 +237,11 @@ function filtrarNuevos() {
             <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
                 </div>
         </div>`;
+        contenedorVentas.innerHTML = `
+        <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
+        <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
+        <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
+        `
 
     contenedorVehiculos.append(column);
 
@@ -214,7 +260,6 @@ function filtrarNuevos() {
 function filtrarUsados() {
     let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
     if (arrayVacio(vehiculosFiltradosUsados) === true) {
-        console.log("No hay vehículos que concuerden con el filtro.")
         sinVehiculos()
     }
     else {
@@ -224,6 +269,9 @@ function filtrarUsados() {
     contenedorVehiculos.innerHTML = "";
 
     vehiculosFiltradosUsados.forEach((vehiculo) => {
+    let costoVehiculos = calcularCosto(vehiculosFiltradosUsados)
+    let ventaVehiculos = calcularVenta(vehiculosFiltradosUsados)
+    let gananciaVehiculos = ventaVehiculos - costoVehiculos
     let column = document.createElement("div");
     column.className = "col-md-4 mt-3 mb-3";
     column.id = `columna-${vehiculo.id}`;
@@ -253,6 +301,11 @@ function filtrarUsados() {
             <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
                 </div>
         </div>`;
+        contenedorVentas.innerHTML = `
+        <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
+        <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
+        <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
+        `
 
     contenedorVehiculos.append(column);
 
@@ -271,7 +324,6 @@ function filtrarUsados() {
 function filtrarOcupantes() {
     let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
     if (arrayVacio(vehiculosFiltradosOcupantes) === true) {
-        console.log("No hay vehículos que concuerden con el filtro.")
         sinVehiculos()
     }
     else {
@@ -282,6 +334,9 @@ function filtrarOcupantes() {
     contenedorVehiculos.innerHTML = "";
 
     vehiculosFiltradosOcupantes.forEach((vehiculo) => {
+    let costoVehiculos = calcularCosto(vehiculosFiltradosOcupantes)
+    let ventaVehiculos = calcularVenta(vehiculosFiltradosOcupantes)
+    let gananciaVehiculos = ventaVehiculos - costoVehiculos
     let column = document.createElement("div");
     column.className = "col-md-4 mt-3 mb-3";
     column.id = `columna-${vehiculo.id}`;
@@ -311,6 +366,11 @@ function filtrarOcupantes() {
             <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
                 </div>
         </div>`;
+        contenedorVentas.innerHTML = `
+        <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
+        <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
+        <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
+        `
 
     contenedorVehiculos.append(column);
 
@@ -339,22 +399,17 @@ function arrayVacio(array) {
 
 //Si el filtro no encuentra vehículos mostramos en el HTML un texto.
 function sinVehiculos() {
-    for (const vehiculo of vehiculos) {
-        contenedorVehiculos.innerHTML = "";
-        contenedorVehiculos = document.getElementById("contenedor-vehiculos")
-        let column = document.createElement("div")
-        column.className = "col mt-3 mb-3"
-        column.id = "columna-sin-vehiculos"
-        column.innerHTML = `
+        console.log("No hay vehículos que concuerden con el filtro.")
+        contenedorVehiculos.innerHTML = `
         <div class="card">
             <div class="card-body">
-                <h3 class="card-text text-center"><b>No hay vehículos que concuerden con el filtro.</b></h3>
+                <h3 class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></h3>
             </div>
         </div>
-        `
-        contenedorVehiculos.append(column) 
-    }
+        `;
+        contenedorVentas.innerHTML = ""
 }
+
 
 //Eliminando un vehículo con el botón
 function eliminarVehiculo(idVehiculo) {
@@ -365,9 +420,9 @@ function eliminarVehiculo(idVehiculo) {
 
     vehiculos.splice(indiceBorrar, 1);
     columnaBorrar.remove();
+    mostrarVehiculos();
     if (arrayVacio(vehiculos) === true) {
-        console.log("No hay vehículos que concuerden con el filtro.")
-        sinVehiculos(vehiculos)
+        sinVehiculos()
     }
 }
 
