@@ -150,6 +150,7 @@ function mostrarVehiculos() {
     <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
     <p class="card-text">Kms: <b>${vehiculo.km}</b></p>
     <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+    <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra}</b></p>
     <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
     </div>
     <div class="card-footer text-center">
@@ -202,6 +203,7 @@ function filtrarNuevos() {
     <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
     <p class="card-text">Kms: <b>${vehiculo.km}</b></p>
     <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+    <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra}</b></p>
     <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
     </div>
     <div class="card-footer text-center">
@@ -253,6 +255,7 @@ function filtrarUsados() {
         <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
         <p class="card-text">Kms: <b>${vehiculo.km}</b></p>
         <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+        <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra}</b></p>
         <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
         </div>
         <div class="card-footer text-center">
@@ -305,6 +308,7 @@ function filtrarOcupantes() {
     <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
     <p class="card-text">Kms: <b>${vehiculo.km}</b></p>
     <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+    <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra}</b></p>
     <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
     </div>
     <div class="card-footer text-center">
