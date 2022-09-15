@@ -144,34 +144,18 @@ function mostrarVehiculos() {
     column.className = "col-md-4 mt-3 mb-3";
     column.id = `columna-${vehiculo.id}`;
     column.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text">Marca:
-                    <b>${vehiculo.marca}</b>
-                </p>
-                <p class="card-text">Modelo:
-                    <b>${vehiculo.modelo}</b>
-                </p>
-                <p class="card-text">Año:
-                    <b>${vehiculo.anio}</b>
-                </p>
-                <p class="card-text">Kms:
-                    <b>${vehiculo.km}</b>
-                </p>
-                <p class="card-text">Tipo:
-                    <b>${vehiculo.tipo}</b>
-                </p>
-                <p class="card-text">Precio Compra:
-                    <b>${vehiculo.precioCompra}</b>
-                </p>
-                <p class="card-text">Precio Venta:
-                    <b>${vehiculo.precioVenta}</b>
-                </p>
-            </div>
-            <div class="card-footer">
-            <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-                </div>
-        </div>`;
+    <div class="card">
+    <div class="card-body">
+    <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
+    <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+    <p class="card-text">Kms: <b>${vehiculo.km}</b></p>
+    <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+    <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
+    </div>
+    <div class="card-footer text-center">
+        <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
+    </div>
+</div>`;
 
         contenedorVentas.innerHTML = `
         <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
@@ -212,31 +196,18 @@ function filtrarNuevos() {
     column.className = "col-md-4 mt-3 mb-3";
     column.id = `columna-${vehiculo.id}`;
     column.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text">Marca:
-                    <b>${vehiculo.marca}</b>
-                </p>
-                <p class="card-text">Modelo:
-                    <b>${vehiculo.modelo}</b>
-                </p>
-                <p class="card-text">Año:
-                    <b>${vehiculo.anio}</b>
-                </p>
-                <p class="card-text">Kms:
-                    <b>${vehiculo.km}</b>
-                </p>
-                <p class="card-text">Tipo:
-                    <b>${vehiculo.tipo}</b>
-                </p>
-                <p class="card-text">Precio Venta:
-                    <b>${vehiculo.precioVenta}</b>
-                </p>
-            </div>
-            <div class="card-footer">
-            <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-                </div>
-        </div>`;
+    <div class="card">
+    <div class="card-body">
+    <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
+    <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+    <p class="card-text">Kms: <b>${vehiculo.km}</b></p>
+    <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+    <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
+    </div>
+    <div class="card-footer text-center">
+        <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
+    </div>
+</div>`;
         contenedorVentas.innerHTML = `
         <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
         <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
@@ -276,31 +247,18 @@ function filtrarUsados() {
     column.className = "col-md-4 mt-3 mb-3";
     column.id = `columna-${vehiculo.id}`;
     column.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text">Marca:
-                    <b>${vehiculo.marca}</b>
-                </p>
-                <p class="card-text">Modelo:
-                    <b>${vehiculo.modelo}</b>
-                </p>
-                <p class="card-text">Año:
-                    <b>${vehiculo.anio}</b>
-                </p>
-                <p class="card-text">Kms:
-                    <b>${vehiculo.km}</b>
-                </p>
-                <p class="card-text">Tipo:
-                    <b>${vehiculo.tipo}</b>
-                </p>
-                <p class="card-text">Precio Venta:
-                    <b>${vehiculo.precioVenta}</b>
-                </p>
-            </div>
-            <div class="card-footer">
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
+        <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+        <p class="card-text">Kms: <b>${vehiculo.km}</b></p>
+        <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+        <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
+        </div>
+        <div class="card-footer text-center">
             <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-                </div>
-        </div>`;
+        </div>
+    </div>`;
         contenedorVentas.innerHTML = `
         <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
         <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
@@ -341,31 +299,18 @@ function filtrarOcupantes() {
     column.className = "col-md-4 mt-3 mb-3";
     column.id = `columna-${vehiculo.id}`;
     column.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text">Marca:
-                    <b>${vehiculo.marca}</b>
-                </p>
-                <p class="card-text">Modelo:
-                    <b>${vehiculo.modelo}</b>
-                </p>
-                <p class="card-text">Año:
-                    <b>${vehiculo.anio}</b>
-                </p>
-                <p class="card-text">Kms:
-                    <b>${vehiculo.km}</b>
-                </p>
-                <p class="card-text">Tipo:
-                    <b>${vehiculo.tipo}</b>
-                </p>
-                <p class="card-text">Precio Venta:
-                    <b>${vehiculo.precioVenta}</b>
-                </p>
-            </div>
-            <div class="card-footer">
-            <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-                </div>
-        </div>`;
+    <div class="card">
+    <div class="card-body">
+    <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
+    <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+    <p class="card-text">Kms: <b>${vehiculo.km}</b></p>
+    <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+    <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta}</b></p>
+    </div>
+    <div class="card-footer text-center">
+        <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
+    </div>
+</div>`;
         contenedorVentas.innerHTML = `
         <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
         <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
