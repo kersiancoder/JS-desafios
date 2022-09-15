@@ -1,7 +1,6 @@
 let vehiculos = [];
 
 let formulario;
-let inputId
 let inputMarca;
 let inputModelo;
 let inputAnio;
@@ -20,8 +19,9 @@ let filtro4;
 
 //Clase para crear los vehículos.
 class Vehiculo {
-    constructor(id, marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta) {
-        this.id = id
+    static count = 0;
+    constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta) {
+        this.id = ++this.constructor.count
         this.marca = marca.toUpperCase()
         this.modelo = modelo.toUpperCase()
         this.anio = anio
@@ -39,7 +39,6 @@ class Vehiculo {
 //Inicializamos los elementos.
 function inicializarElementos() {
     formulario = document.getElementById("formulario");
-    inputId = document.getElementById("inputId");
     inputMarca = document.getElementById("inputMarca");
     inputModelo = document.getElementById("inputModelo");
     inputAnio = document.getElementById("inputAnio");
@@ -64,7 +63,6 @@ function inicializarEventos() {
 //Validamos el formulario.
 function validarFormulario(event) {
     event.preventDefault();
-    let idVehiculo = inputId.value;
     let marca = inputMarca.value;
     let modelo = inputModelo.value;
     let anio = parseInt(inputAnio.value);
@@ -85,10 +83,7 @@ function validarFormulario(event) {
                 precioVenta = precioCompra * 2
             }
 
-    const idExiste = vehiculos.some((vehiculo) => vehiculo.id === idVehiculo);
-    if (!idExiste) {
         let agregarVehiculo = new Vehiculo(
-            idVehiculo,
             marca,
             modelo,
             anio,
@@ -103,9 +98,6 @@ function validarFormulario(event) {
     vehiculos.push(agregarVehiculo);
     formulario.reset();
     mostrarVehiculos();
-    } else {
-        alert("El id ya existe");
-    }
 }
 
 function calcularCosto(vehiculos) {
