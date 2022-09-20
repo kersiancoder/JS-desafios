@@ -88,7 +88,7 @@ function inicializarEventos() {
     btnLimpiarStorage.onclick = eliminarStorage;
 }
 
-//Logueo del usuario.
+//Logueo del usuario y si es el usuario anterior cargamos la lista de  vehículos que tenía ingresados.
 function identificarUsuario (event) {
     event.preventDefault();
     usuario = inputUsuario.value.toUpperCase();
@@ -116,7 +116,7 @@ function mostrarTextoUsuario () {
     contenedorFormularioVehiculos.hidden = false
 }
 
-//Eliminamos todos los datos de la Storage.
+//Eliminamos todos los datos de la Storage pero los guardamos por si el usuario ingresa nuevamente.
 function eliminarStorage () {
     vehiculosJSONUltimo = localStorage.getItem("vehiculos", vehiculosJSONUltimo)
     usuarioJSONUltimo = localStorage.getItem("usuario")
