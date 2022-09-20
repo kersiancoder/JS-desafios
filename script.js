@@ -52,9 +52,7 @@ function inicializarElementos() {
     filtro1 = document.getElementById("filtro1"); 
     filtro2 = document.getElementById("filtro2");
     filtro3 = document.getElementById("filtro3");
-    filtro4 = document.getElementById("filtro4");
-    filtro4.onclick = () => mostrarVehiculos(vehiculos)
-    
+    filtro4 = document.getElementById("filtro4");    
 }
 
 //Inicializamos los eventos.
@@ -121,68 +119,67 @@ function calcularVenta(vehiculos) {
 
 //Mostramos los vehículos en el HTML y consola.
 function mostrarVehiculos(x) {
+    ejecutarFiltros(vehiculos)
 
     if (arrayVacio(x) === true) {
         sinVehiculos()
     }
     else { 
+        contenedorVehiculos.innerHTML = "";
+        contenedorVentas.innerHTML = "";
+        console.log(x)
 
-    contenedorVehiculos.innerHTML = "";
-    contenedorVentas.innerHTML = "";
-    console.log(x)
-
-    x.forEach((vehiculo) => {
-    let costoVehiculos = calcularCosto(vehiculos)
-    let ventaVehiculos = calcularVenta(vehiculos)
-    let gananciaVehiculos = ventaVehiculos - costoVehiculos
-    let column = document.createElement("div");
-    column.className = "col-md-4 mt-3 mb-3";
-    column.id = `columna-${vehiculo.id}`;
-    column.innerHTML = `
-    <div class="card">
-    <div class="card-body">
-    <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
-    <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
-    <p class="card-text">Kms: <b>${vehiculo.km} Kms.</b></p>
-    <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
-    <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
-    <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
-    </div>
-    <div class="card-footer text-center">
-        <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-    </div>
-</div>`;
+        x.forEach((vehiculo) => {
+        let costoVehiculos = calcularCosto(vehiculos)
+        let ventaVehiculos = calcularVenta(vehiculos)
+        let gananciaVehiculos = ventaVehiculos - costoVehiculos
+        let column = document.createElement("div");
+        column.className = "col-md-4 mt-3 mb-3";
+        column.id = `columna-${vehiculo.id}`;
+        column.innerHTML = `
+            <div class="card">
+            <div class="card-body">
+            <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
+            <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+            <p class="card-text">Kms: <b>${vehiculo.km} Kms.</b></p>
+            <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+            <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
+            <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
+            </div>
+            <div class="card-footer text-center">
+            <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
+            </div>
+            </div>`;
 
         contenedorVentas.innerHTML = `
-        <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
-        <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
-        <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
-        `
+            <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
+            <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
+            <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
+            `
 
-    contenedorVehiculos.append(column);
+        contenedorVehiculos.append(column);
 
-    let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-    botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
-    ejecutarFiltros()
-});  
-}
+        let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
+        botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
+        });  
+    }
 }   
 
 //Creamos los filtros
-function ejecutarFiltros() {
+function ejecutarFiltros(vehiculos) {
     let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
     let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
     let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
-
     filtro1.onclick = () => mostrarVehiculos(vehiculosFiltradosNuevos)
     filtro2.onclick = () => mostrarVehiculos(vehiculosFiltradosUsados)
     filtro3.onclick = () => mostrarVehiculos(vehiculosFiltradosOcupantes)
+    filtro4.onclick = () => mostrarVehiculos(vehiculos)
 }
 
 //Chequeamos si un array es un array y si está vacío
 function arrayVacio(array) {
     if (!Array.isArray(array)) {
-        // return FALSE;
+        return FALSE;
     }
     if (array.length == 0) {
         return true;
@@ -194,12 +191,11 @@ function arrayVacio(array) {
 function sinVehiculos() {
         console.log("No hay vehículos que concuerden con el filtro.")
         contenedorVehiculos.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></p>
-            </div>
-        </div>
-        `;
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></p>
+                </div>
+            </div>`
         contenedorVentas.innerHTML = ""
 }
 
@@ -207,8 +203,9 @@ function sinVehiculos() {
 function eliminarVehiculo(idVehiculo) {
     let columnaBorrar = document.getElementById(`columna-${idVehiculo}`);
     let indiceBorrar = vehiculos.findIndex(
-    (vehiculo) => Number(vehiculo.id) === Number(idVehiculo)
+        (vehiculo) => Number(vehiculo.id) === Number(idVehiculo)
     );
+    
     vehiculos.splice(indiceBorrar, 1);
     columnaBorrar.remove();
     filtro4.click()
