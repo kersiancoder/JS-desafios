@@ -17,6 +17,7 @@ let filtro2;
 let filtro3;
 let filtro4;
 
+
 //Clase para crear los vehículos.
 class Vehiculo {
     static count = 0;
@@ -52,6 +53,7 @@ function inicializarElementos() {
     filtro2 = document.getElementById("filtro2");
     filtro3 = document.getElementById("filtro3");
     filtro4 = document.getElementById("filtro4");
+    filtro4.onclick = () => mostrarVehiculos(vehiculos)
     
 }
 
@@ -161,8 +163,13 @@ function mostrarVehiculos(x) {
 
     let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
     botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
+    ejecutarFiltros()
+});  
+}
+}   
 
 //Creamos los filtros
+function ejecutarFiltros() {
     let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
     let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
     let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
@@ -170,10 +177,7 @@ function mostrarVehiculos(x) {
     filtro1.onclick = () => mostrarVehiculos(vehiculosFiltradosNuevos)
     filtro2.onclick = () => mostrarVehiculos(vehiculosFiltradosUsados)
     filtro3.onclick = () => mostrarVehiculos(vehiculosFiltradosOcupantes)
-    filtro4.onclick = () => mostrarVehiculos(vehiculos)
-    });  
 }
-}    
 
 //Chequeamos si un array es un array y si está vacío
 function arrayVacio(array) {
