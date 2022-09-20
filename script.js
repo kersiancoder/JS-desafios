@@ -3,6 +3,10 @@
 let vehiculos = [];
 let usuario;
 
+//Usuario último logeado
+let usuarioJSONUltimo;
+let vehiculosJSONUltimo;
+
 //Variables para autenticación y usuario.
 let formularioIdentificacion;
 let contenedorIdentificacion;
@@ -75,8 +79,6 @@ function inicializarElementos() {
     vehiculosAgregados = document.getElementById("vehiculosAgregados")
     contenedorFormularioVehiculos = document.getElementById("contenedorFormularioVehiculos")
     inputUsuario = document.getElementById("inputUsuario")
-    
-
 }
 
 //Inicializamos los eventos.
@@ -89,8 +91,16 @@ function inicializarEventos() {
 //Logueo del usuario.
 function identificarUsuario (event) {
     event.preventDefault();
-    usuario = inputUsuario.value
-    formularioIdentificacion.reset()
+    usuario = inputUsuario.value.toUpperCase();
+    if (usuarioJSONUltimo == usuario) {
+        vehiculos = JSON.parse(vehiculosJSONUltimo)
+        mostrarVehiculos(vehiculos)
+        actualizarUsuarioStorage();
+        mostrarTextoUsuario()
+    }
+    else {
+        formularioIdentificacion.reset() 
+    }
     actualizarUsuarioStorage();
     mostrarTextoUsuario()
 }
@@ -108,9 +118,10 @@ function mostrarTextoUsuario () {
 
 //Eliminamos todos los datos de la Storage.
 function eliminarStorage () {
+    vehiculosJSONUltimo = localStorage.getItem("vehiculos", vehiculosJSONUltimo)
+    usuarioJSONUltimo = localStorage.getItem("usuario")
     localStorage.clear();
     vehiculos = [];
-    console.log(usuario)
     mostrarVehiculos(vehiculos);
     contenedorIdentificacion.hidden = false
     contenedorUsuario.hidden = true
@@ -183,7 +194,7 @@ function mostrarVehiculos(x) {
     if (arrayVacio(x) === true) {
         sinVehiculos()
     }
-    else { 
+    else {  
 
         ejecutarFiltros(vehiculos)
         contenedorVehiculos.innerHTML = "";
@@ -224,7 +235,7 @@ function mostrarVehiculos(x) {
         botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
         });  
     }
-}   
+}    
 
 //Creamos los filtros
 function ejecutarFiltros(vehiculos) {
@@ -240,7 +251,7 @@ function ejecutarFiltros(vehiculos) {
 //Chequeamos si un array es un array y si está vacío
 function arrayVacio(array) {
     if (!Array.isArray(array)) {
-        return FALSE;
+        return true;
     }
     if (array.length == 0) {
         return true;
@@ -275,7 +286,7 @@ function eliminarVehiculo(idVehiculo) {
 
 //Guardamos el usuario en Storage.
 function actualizarUsuarioStorage () {
-    localStorage.setItem("usuario", usuario)
+    localStorage.setItem("usuario", usuario.toUpperCase())
 }
 
 //Guardamos los vehiculos en la Storage.
