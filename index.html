@@ -10,10 +10,30 @@
 </head>
 
 <body>
-    <div class="container p-3">
-        
-        <div class="row pt-4">
-            <div class="col-md-8">
+    
+    <div class="container-fluid p-3">
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+                <div id="contenedorUsuario" hidden>
+                    <p id="textoUsuario"></p>
+                    <button class="btn btn-warning" id="limpiarStorage" hidden>Salir</button>
+                </div>
+                <div id="contenedorIdentificacion">
+                    <h2>Login</h2>
+                    <form id="formularioIdentificacion">
+                        <div class="d-flex align-content-center flex-wrap flex-column">
+                            <input placeholder="Ingresar usuario" type="text" class="form-control" id="inputUsuario" required>
+                            <button type="submit" class="btn btn-secondary">Identificarse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        <div id="vehiculosAgregados" class="row pt-4" hidden>
+            <hr>
+            <div class="col-md-8">  
                 <h3>Vehiculos agregados</h3>
                 <div id="contenedor-vehiculos" class="row pb-4"></div>
                 <div id="ventas-total"></div>
@@ -31,28 +51,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div id="contenedorUsuario" hidden>
-                    <p id="textoUsuario">Bienvenido: </p>
-                    <button class="btn btn-warning" id="limpiarStorage" hidden>Salir</button>
-                </div>
-                <div id="contenedorIdentificacion">
-                    <h2>Identificate</h2>
-                    <form id="formularioIdentificacion">
-                        <div class="row">
-                            <div class="col">
-                                <div>
-                                    <input placeholder="Ingresar usuario" type="text" class="form-control" id="inputUsuario" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pt-2">
-                            <div class="col d-flex justify-content-between">
-                                <button type="submit" class="btn btn-secondary">Identificarse</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div id="contenedorFormularioVehiculos" class="pt-4">
+                <div id="contenedorFormularioVehiculos" class="pt-4" hidden>
                     <h3>Ingresar vehículos</h3>
                     <form id="formulario">
                         <div class="mb-3">

@@ -8,7 +8,10 @@ let formularioIdentificacion;
 let contenedorIdentificacion;
 let contenedorUsuario;
 let textoUsuario;
+let inputUsuario
 let btnLimpiarStorage;
+let vehiculosAgregados;
+let contenedorFormularioVehiculos
 
 //Variables para el formulario de vehículos.
 let formulario;
@@ -69,6 +72,10 @@ function inicializarElementos() {
     contenedorIdentificacion = document.getElementById("contenedorIdentificacion")
     contenedorUsuario = document.getElementById("contenedorUsuario")
     textoUsuario = document.getElementById("textoUsuario")
+    vehiculosAgregados = document.getElementById("vehiculosAgregados")
+    contenedorFormularioVehiculos = document.getElementById("contenedorFormularioVehiculos")
+    inputUsuario = document.getElementById("inputUsuario")
+    
 
 }
 
@@ -92,18 +99,23 @@ function identificarUsuario (event) {
 function mostrarTextoUsuario () {
     contenedorIdentificacion.hidden = true
     contenedorUsuario.hidden = false
+    textoUsuario.innerHTML = `Bienvenido `
     textoUsuario.innerHTML += `<b>${usuario}</b>`
     btnLimpiarStorage.hidden = false
+    vehiculosAgregados.hidden = false
+    contenedorFormularioVehiculos.hidden = false
 }
 
 //Eliminamos todos los datos de la Storage.
 function eliminarStorage () {
     localStorage.clear();
     vehiculos = [];
-    usuario = null
+    console.log(usuario)
     mostrarVehiculos(vehiculos);
     contenedorIdentificacion.hidden = false
     contenedorUsuario.hidden = true
+    vehiculosAgregados.hidden = true
+    contenedorFormularioVehiculos.hidden = true
 }
 
 //Validamos el formulario.
