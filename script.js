@@ -190,8 +190,8 @@ function mostrarVehiculos(x) {
         console.log(x)
 
         x.forEach((vehiculo) => {
-        let costoVehiculos = calcularCosto(vehiculos)
-        let ventaVehiculos = calcularVenta(vehiculos)
+        let costoVehiculos = calcularCosto(x)
+        let ventaVehiculos = calcularVenta(x)
         let gananciaVehiculos = ventaVehiculos - costoVehiculos
         let column = document.createElement("div");
         column.className = "col-md-4 mt-3 mb-3";
