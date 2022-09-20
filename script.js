@@ -97,7 +97,7 @@ function validarFormulario(event) {
 
     vehiculos.push(agregarVehiculo);
     formulario.reset();
-    mostrarVehiculos();
+    mostrarVehiculos(vehiculos);
 }
 
 function calcularCosto(vehiculos) {
@@ -117,18 +117,19 @@ function calcularVenta(vehiculos) {
     return sumatoriaVenta;
 }
 
-
 //Mostramos los vehículos en el HTML y consola.
-function mostrarVehiculos() {
-    if (arrayVacio(vehiculos) === true) {
+function mostrarVehiculos(x) {
+
+    if (arrayVacio(x) === true) {
         sinVehiculos()
     }
-    else {
+    else { 
+
     contenedorVehiculos.innerHTML = "";
     contenedorVentas.innerHTML = "";
-    console.log(vehiculos)
+    console.log(x)
 
-    vehiculos.forEach((vehiculo) => {
+    x.forEach((vehiculo) => {
     let costoVehiculos = calcularCosto(vehiculos)
     let ventaVehiculos = calcularVenta(vehiculos)
     let gananciaVehiculos = ventaVehiculos - costoVehiculos
@@ -161,182 +162,29 @@ function mostrarVehiculos() {
     let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
     botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
-    filtro1.onclick = () => filtrarNuevos()
-    filtro2.onclick = () => filtrarUsados()
-    filtro3.onclick = () => filtrarOcupantes()
-    filtro4.onclick = () => mostrarVehiculos()
-    });    
-}
-}
-
-//Filtramos los vehículos nuevos.
-function filtrarNuevos() {
+//Creamos los filtros
     let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
-    if (arrayVacio(vehiculosFiltradosNuevos) === true) {
-        sinVehiculos()
-    }
-    else {
-
-    console.log("Vehículos nuevos:")
-    console.log(vehiculosFiltradosNuevos)
-    contenedorVehiculos.innerHTML = "";
-
-    vehiculosFiltradosNuevos.forEach((vehiculo) => {
-    let costoVehiculos = calcularCosto(vehiculosFiltradosNuevos)
-    let ventaVehiculos = calcularVenta(vehiculosFiltradosNuevos)
-    let gananciaVehiculos = ventaVehiculos - costoVehiculos
-    let column = document.createElement("div");
-    column.className = "col-md-4 mt-3 mb-3";
-    column.id = `columna-${vehiculo.id}`;
-    column.innerHTML = `
-    <div class="card">
-    <div class="card-body">
-    <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
-    <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
-    <p class="card-text">Kms: <b>${vehiculo.km} Kms.</b></p>
-    <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
-    <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
-    <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
-    </div>
-    <div class="card-footer text-center">
-        <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-    </div>
-</div>`;
-        contenedorVentas.innerHTML = `
-        <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
-        <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
-        <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
-        `
-
-    contenedorVehiculos.append(column);
-
-    let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-    botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
-
-    filtro1.onclick = () => filtrarNuevos()
-    filtro2.onclick = () => filtrarUsados()
-    filtro3.onclick = () => filtrarOcupantes()
-    filtro4.onclick = () => mostrarVehiculos()
-    });
-    }
-}
-
-//Filtramos los vehículos usados.
-function filtrarUsados() {
     let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
-    if (arrayVacio(vehiculosFiltradosUsados) === true) {
-        sinVehiculos()
-    }
-    else {
-
-    console.log("Vehículos usados:")
-    console.log(vehiculosFiltradosUsados)
-    contenedorVehiculos.innerHTML = "";
-
-    vehiculosFiltradosUsados.forEach((vehiculo) => {
-    let costoVehiculos = calcularCosto(vehiculosFiltradosUsados)
-    let ventaVehiculos = calcularVenta(vehiculosFiltradosUsados)
-    let gananciaVehiculos = ventaVehiculos - costoVehiculos
-    let column = document.createElement("div");
-    column.className = "col-md-4 mt-3 mb-3";
-    column.id = `columna-${vehiculo.id}`;
-    column.innerHTML = `
-    <div class="card">
-        <div class="card-body">
-        <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
-        <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
-        <p class="card-text">Kms: <b>${vehiculo.km} Kms.</b></p>
-        <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
-        <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
-        <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
-        </div>
-        <div class="card-footer text-center">
-            <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-        </div>
-    </div>`;
-        contenedorVentas.innerHTML = `
-        <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
-        <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
-        <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
-        `
-
-    contenedorVehiculos.append(column);
-
-    let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-    botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
-
-    filtro1.onclick = () => filtrarNuevos()
-    filtro2.onclick = () => filtrarUsados()
-    filtro3.onclick = () => filtrarOcupantes()
-    filtro4.onclick = () => mostrarVehiculos()
-    });  
-}  
-}
-
-//Filtramos los vehículos con más de 6 ocupantes.
-function filtrarOcupantes() {
     let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
-    if (arrayVacio(vehiculosFiltradosOcupantes) === true) {
-        sinVehiculos()
-    }
-    else {
 
-    console.log("Vehículos con más de 6 ocupantes")
-    console.log(vehiculosFiltradosOcupantes)
-
-    contenedorVehiculos.innerHTML = "";
-
-    vehiculosFiltradosOcupantes.forEach((vehiculo) => {
-    let costoVehiculos = calcularCosto(vehiculosFiltradosOcupantes)
-    let ventaVehiculos = calcularVenta(vehiculosFiltradosOcupantes)
-    let gananciaVehiculos = ventaVehiculos - costoVehiculos
-    let column = document.createElement("div");
-    column.className = "col-md-4 mt-3 mb-3";
-    column.id = `columna-${vehiculo.id}`;
-    column.innerHTML = `
-    <div class="card">
-    <div class="card-body">
-    <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
-    <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
-    <p class="card-text">Kms: <b>${vehiculo.km} Kms.</b></p>
-    <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
-    <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
-    <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
-    </div>
-    <div class="card-footer text-center">
-        <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-    </div>
-</div>`;
-        contenedorVentas.innerHTML = `
-        <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
-        <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
-        <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
-        `
-
-    contenedorVehiculos.append(column);
-
-    let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-    botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
-
-    filtro1.onclick = () => filtrarNuevos()
-    filtro2.onclick = () => filtrarUsados()
-    filtro3.onclick = () => filtrarOcupantes()
-    filtro4.onclick = () => mostrarVehiculos()
-
-    });    
+    filtro1.onclick = () => mostrarVehiculos(vehiculosFiltradosNuevos)
+    filtro2.onclick = () => mostrarVehiculos(vehiculosFiltradosUsados)
+    filtro3.onclick = () => mostrarVehiculos(vehiculosFiltradosOcupantes)
+    filtro4.onclick = () => mostrarVehiculos(vehiculos)
+    });  
 }
-}
+}    
 
 //Chequeamos si un array es un array y si está vacío
 function arrayVacio(array) {
     if (!Array.isArray(array)) {
-        return FALSE;
+        // return FALSE;
     }
     if (array.length == 0) {
         return true;
     }
     return false;
-}
+} 
 
 //Si el filtro no encuentra vehículos mostramos en el HTML un texto.
 function sinVehiculos() {
@@ -357,14 +205,9 @@ function eliminarVehiculo(idVehiculo) {
     let indiceBorrar = vehiculos.findIndex(
     (vehiculo) => Number(vehiculo.id) === Number(idVehiculo)
     );
-
     vehiculos.splice(indiceBorrar, 1);
     columnaBorrar.remove();
-    mostrarVehiculos();
     filtro4.click()
-    if (arrayVacio(vehiculos) === true) {
-        sinVehiculos()
-    }
 }
 
 //Inicializamos el programa.
