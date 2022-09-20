@@ -1,5 +1,16 @@
-let vehiculos = [];
 
+//Variables de información.
+let vehiculos = [];
+let usuario;
+
+//Variables para autenticación y usuario.
+let formularioIdentificacion;
+let contenedorIdentificacion;
+let contenedorUsuario;
+let textoUsuario;
+let btnLimpiarStorage;
+
+//Variables para el formulario de vehículos.
 let formulario;
 let inputMarca;
 let inputModelo;
@@ -16,7 +27,6 @@ let filtro1;
 let filtro2;
 let filtro3;
 let filtro4;
-
 
 //Clase para crear los vehículos.
 class Vehiculo {
@@ -53,11 +63,43 @@ function inicializarElementos() {
     filtro2 = document.getElementById("filtro2");
     filtro3 = document.getElementById("filtro3");
     filtro4 = document.getElementById("filtro4");    
+    btnLimpiarStorage = document.getElementById("limpiarStorage")
+    formularioIdentificacion = document.getElementById("formularioIdentificacion")
+    inputUsuario = document.getElementById("inputUsuario")
+    contenedorIdentificacion = document.getElementById("contenedorIdentificacion")
+    contenedorUsuario = document.getElementById("contenedorUsuario")
+    textoUsuario = document.getElementById("textoUsuario")
+
 }
 
 //Inicializamos los eventos.
 function inicializarEventos() {
     formulario.onsubmit = (event) => validarFormulario(event);
+    formularioIdentificacion.onsubmit = (event) => identificarUsuario(event)
+    btnLimpiarStorage.onclick = eliminarStorage;
+}
+
+function identificarUsuario (event) {
+    event.preventDefault();
+    usuario = inputUsuario.value
+    formularioIdentificacion.reset()
+    actualizarUsuarioStorage();
+    mostrarTextoUsuario()
+}
+
+function mostrarTextoUsuario () {
+    contenedorIdentificacion.hidden = true
+    contenedorUsuario.hidden = false
+    textoUsuario.innerHTML += `<b>${usuario}</b>`
+    btnLimpiarStorage.hidden = false
+}
+
+function eliminarStorage () {
+    localStorage.clear();
+    vehiculos = [];
+    mostrarVehiculos(vehiculos);
+    contenedorIdentificacion.hidden = false
+    contenedorUsuario.hidden = true
 }
 
 //Validamos el formulario.
@@ -152,6 +194,7 @@ function mostrarVehiculos(x) {
             </div>
             </div>`;
 
+        contenedorVentas.className ="pb-2"
         contenedorVentas.innerHTML = `
             <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
             <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
@@ -213,12 +256,18 @@ function eliminarVehiculo(idVehiculo) {
     filtro4.click()
 }
 
-//Guardamos los vehiculos en la storage.
+//Guardamos el usuario en Storage.
+function actualizarUsuarioStorage () {
+    localStorage.setItem("usuario", usuario)
+}
+
+//Guardamos los vehiculos en la Storage.
 function actualizarVehiculosStorage () {
     let vehiculosJSON = JSON.stringify(vehiculos)
     localStorage.setItem("vehiculos", vehiculosJSON)
 }
 
+//Si hay datos en Storage los mostramos en el HTML.
 function obtenerVehiculosStorage () {
     let vehiculosJSON = localStorage.getItem("vehiculos")
 
@@ -228,10 +277,19 @@ function obtenerVehiculosStorage () {
     }
 }
 
+function obtenerUsuarioStorage () {
+    let usuarioJSON = localStorage.getItem("usuario")
+    if(usuarioJSON) {
+        usuario = usuarioJSON
+        mostrarTextoUsuario()
+    }
+}
+
 //Inicializamos el programa.
 function main() {
     inicializarElementos();
     inicializarEventos();
+    obtenerUsuarioStorage();
     obtenerVehiculosStorage();
 }
 

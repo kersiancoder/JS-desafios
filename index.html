@@ -15,23 +15,25 @@
         <div class="row pt-4">
             <div class="col-md-8">
                 <h3>Vehiculos agregados</h3>
-                <div id="contenedor-vehiculos" class="row"></div>
+                <div id="contenedor-vehiculos" class="row pb-4"></div>
                 <div id="ventas-total"></div>
-                <div id="filtro"></div>
-                <div class="btn-group col-md-12 text-center" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="filtro1" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="filtro1">Filtrar nuevos</label>
-                    <input type="radio" class="btn-check" name="btnradio" id="filtro2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="filtro2">Filtrar usados</label>
-                    <input type="radio" class="btn-check" name="btnradio" id="filtro3" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="filtro3">Filtrar ocupantes mayor a 6</label>
-                    <input type="radio" class="btn-check" name="btnradio" id="filtro4" autocomplete="off" checked>
-                    <label class="btn btn-outline-primary" for="filtro4">Ver todos</label>
+                <div id="filtro">
+                    <div class="btn-group col-md-12 text-center" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="filtro1" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="filtro1">Filtrar nuevos</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="filtro2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="filtro2">Filtrar usados</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="filtro3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="filtro3">Filtrar ocupantes mayor a 6</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="filtro4" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="filtro4">Ver todos</label>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div id="contenedorUsuario">
-                    <p id="textoUsuario" hidden>Bienvenido: </p>
+                <div id="contenedorUsuario" hidden>
+                    <p id="textoUsuario">Bienvenido: </p>
+                    <button class="btn btn-warning" id="limpiarStorage" hidden>Salir</button>
                 </div>
                 <div id="contenedorIdentificacion">
                     <h2>Identificate</h2>
@@ -39,15 +41,13 @@
                         <div class="row">
                             <div class="col">
                                 <div>
-                                    <label class="form-label">Nombre <b>(admin)</b></label>
-                                    <input type="text" class="form-control" id="inputUsuario" required>
+                                    <input placeholder="Ingresar usuario" type="text" class="form-control" id="inputUsuario" required>
                                 </div>
                             </div>
                         </div>
                         <div class="row pt-2">
                             <div class="col d-flex justify-content-between">
                                 <button type="submit" class="btn btn-secondary">Identificarse</button>
-                                <button class="btn btn-warning" id="limpiarStorage" hidden>Salir</button>
                             </div>
                         </div>
                     </form>
