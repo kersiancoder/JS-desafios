@@ -121,11 +121,6 @@ function eliminarStorage () {
 //Validamos el formulario.
 function validarFormulario(event) {
 
-    if (usuario  == null) {
-        alert("Debes ingresar para insertar vehículos.")
-    }
-    else {
-
     event.preventDefault();
     let marca = inputMarca.value;
     let modelo = inputModelo.value;
@@ -162,8 +157,8 @@ function validarFormulario(event) {
         formulario.reset();
         actualizarVehiculosStorage();
         mostrarVehiculos(vehiculos);
-    } 
-}
+} 
+
 
 function calcularCosto(vehiculos) {
     let sumatoriaCosto = 0
