@@ -79,6 +79,7 @@ function inicializarEventos() {
     btnLimpiarStorage.onclick = eliminarStorage;
 }
 
+//Logueo del usuario.
 function identificarUsuario (event) {
     event.preventDefault();
     usuario = inputUsuario.value
@@ -87,6 +88,7 @@ function identificarUsuario (event) {
     mostrarTextoUsuario()
 }
 
+//Cambiamos el estado de los contenedores HTML segun usuario.
 function mostrarTextoUsuario () {
     contenedorIdentificacion.hidden = true
     contenedorUsuario.hidden = false
@@ -94,9 +96,11 @@ function mostrarTextoUsuario () {
     btnLimpiarStorage.hidden = false
 }
 
+//Eliminamos todos los datos de la Storage.
 function eliminarStorage () {
     localStorage.clear();
     vehiculos = [];
+    usuario = null
     mostrarVehiculos(vehiculos);
     contenedorIdentificacion.hidden = false
     contenedorUsuario.hidden = true
@@ -104,6 +108,12 @@ function eliminarStorage () {
 
 //Validamos el formulario.
 function validarFormulario(event) {
+
+    if (usuario  == null) {
+        alert("Debes ingresar para insertar vehículos.")
+    }
+    else {
+
     event.preventDefault();
     let marca = inputMarca.value;
     let modelo = inputModelo.value;
@@ -136,11 +146,11 @@ function validarFormulario(event) {
             precioCompra,
             precioVenta
         );
-
-    vehiculos.push(agregarVehiculo);
-    formulario.reset();
-    actualizarVehiculosStorage();
-    mostrarVehiculos(vehiculos);
+        vehiculos.push(agregarVehiculo);
+        formulario.reset();
+        actualizarVehiculosStorage();
+        mostrarVehiculos(vehiculos);
+    } 
 }
 
 function calcularCosto(vehiculos) {
