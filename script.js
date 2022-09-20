@@ -179,16 +179,16 @@ function calcularVenta(vehiculos) {
 
 //Mostramos los vehículos en el HTML y consola.
 function mostrarVehiculos(x) {
-    ejecutarFiltros(vehiculos)
 
     if (arrayVacio(x) === true) {
         sinVehiculos()
     }
     else { 
+
+        ejecutarFiltros(vehiculos)
         contenedorVehiculos.innerHTML = "";
         contenedorVentas.innerHTML = "";
-        console.log(x)
-
+        
         x.forEach((vehiculo) => {
         let costoVehiculos = calcularCosto(x)
         let ventaVehiculos = calcularVenta(x)
