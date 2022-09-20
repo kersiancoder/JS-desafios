@@ -97,13 +97,14 @@ function validarFormulario(event) {
 
     vehiculos.push(agregarVehiculo);
     formulario.reset();
+    actualizarVehiculosStorage();
     mostrarVehiculos(vehiculos);
 }
 
 function calcularCosto(vehiculos) {
     let sumatoriaCosto = 0
     for (const vehiculo of vehiculos) {
-        sumatoriaCosto += vehiculo.calcularCosto()
+        sumatoriaCosto += vehiculo.precioCompra
     }
     return sumatoriaCosto;
 }
@@ -112,7 +113,7 @@ function calcularCosto(vehiculos) {
 function calcularVenta(vehiculos) {
     let sumatoriaVenta = 0
     for (const vehiculo of vehiculos) {
-        sumatoriaVenta += vehiculo.calcularVenta()
+        sumatoriaVenta += vehiculo.precioVenta
     }
     return sumatoriaVenta;
 }
@@ -208,13 +209,30 @@ function eliminarVehiculo(idVehiculo) {
     
     vehiculos.splice(indiceBorrar, 1);
     columnaBorrar.remove();
+    actualizarVehiculosStorage();
     filtro4.click()
+}
+
+//Guardamos los vehiculos en la storage.
+function actualizarVehiculosStorage () {
+    let vehiculosJSON = JSON.stringify(vehiculos)
+    localStorage.setItem("vehiculos", vehiculosJSON)
+}
+
+function obtenerVehiculosStorage () {
+    let vehiculosJSON = localStorage.getItem("vehiculos")
+
+    if(vehiculosJSON) {
+        vehiculos = JSON.parse(vehiculosJSON)
+        mostrarVehiculos(vehiculos);
+    }
 }
 
 //Inicializamos el programa.
 function main() {
     inicializarElementos();
     inicializarEventos();
+    obtenerVehiculosStorage();
 }
 
 main();
