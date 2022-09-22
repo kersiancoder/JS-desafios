@@ -55,33 +55,30 @@
                     <h3>Ingresar vehículos</h3>
                     <form id="formulario">
                         <div class="mb-3">
-                            <select id="select-marca" required>
+                            <select class="form-select" id="select-marca" required>
                                 <option disabled selected>MARCA</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <select class="followup" id="select-modelo" required>
+                            <select class="form-select"  id="select-modelo" required>
                                 <option disabled selected>MODELO</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <select id="inputAnio" required>
+                            <select class="form-select" id="inputAnio" required>
                                 <option disabled selected>AÑO</option>
                             </select>
                             <!-- <label class="form-label">Año</label>
                             <input type="number" class="form-control" id="inputAnio" required> -->
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Kms</label>
-                            <input type="number" class="form-control" id="inputKm" required>
+                            <input placeholder="KMS" type="number" class="form-control" id="inputKm" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Ocupantes</label>
-                            <input type="number" class="form-control" id="inputOcupantes" required>
+                            <input placeholder="OCUPANTES" type="number" class="form-control" id="inputOcupantes" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Precio compra</label>
-                            <input type="number" class="form-control" id="inputPrecioCompra"required>
+                            <input placeholder="PRECIO (U$S)" type="number" class="form-control" id="inputPrecioCompra"required>
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Ingresar</button>
