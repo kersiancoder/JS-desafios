@@ -14,9 +14,6 @@ let contenedorFormularioVehiculos
 
 //Variables para el formulario de vehículos.
 let formulario;
-let inputMarca;
-let inputModelo;
-let inputAnio;
 let inputKm;
 let inputNuevo;
 let inputTipo;
@@ -30,13 +27,32 @@ let filtro2;
 let filtro3;
 let filtro4;
 
+
+//Constantes de selectores.
+const MARCA = document.querySelectorAll('#select-marca')[0];
+const MODELO = document.querySelectorAll('#select-modelo')[0];
+const DEFAULT = MODELO.innerHTML;
+const ANIO = document.getElementById('inputAnio');
+
+//Constante de Año
+const anioActual = new Date().getFullYear();
+console.log(anioActual);
+
+// For de años 1920 al Año actual.
+for (var i = anioActual; i >= 1920; i--) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.innerHTML = i;
+    ANIO.appendChild(option);
+}
+
 //Clase para crear los vehículos.
 class Vehiculo {
     static count = 0;
     constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta) {
         this.id = ++this.constructor.count
-        this.marca = marca.toUpperCase()
-        this.modelo = modelo.toUpperCase()
+        this.marca = marca
+        this.modelo = modelo
         this.anio = anio
         this.km = km
         this.nuevo = nuevo
@@ -74,14 +90,12 @@ function inicializarElementos() {
     vehiculosAgregados = document.getElementById("vehiculosAgregados")
     contenedorFormularioVehiculos = document.getElementById("contenedorFormularioVehiculos")
     inputUsuario = document.getElementById("inputUsuario")
-    
-
 }
 
 //Inicializamos los eventos.
 function inicializarEventos() {
-    formulario.onsubmit = (event) => validarFormulario(event);
     formularioIdentificacion.onsubmit = (event) => identificarUsuario(event)
+    formulario.onsubmit = (event) => validarFormulario(event);
     btnLimpiarStorage.onclick = eliminarStorage;
 }
 
@@ -109,7 +123,6 @@ function mostrarTextoUsuario () {
 function eliminarStorage () {
     localStorage.clear();
     vehiculos = [];
-    console.log(usuario)
     mostrarVehiculos(vehiculos);
     contenedorIdentificacion.hidden = false
     contenedorUsuario.hidden = true
@@ -117,13 +130,37 @@ function eliminarStorage () {
     contenedorFormularioVehiculos.hidden = true
 }
 
+// Creamos el mapa de marcas y modelos.
+const MARCASYMODELOS = {
+    PEUGEOT: ['107', '206', '508'],
+    TOYOTA: ['PRIUS', 'RAV4', 'YARIS'],
+    VOLKSWAGEN: ['GOL', 'POLO', 'T-CROSS'],
+};
+
+//Añadimos las option según marca seleccionada.
+function aniadirOption(elemento, texto) {
+    let option = document.createElement('option');
+    option.value = texto;
+    option.textContent = texto;
+    elemento.append(option);
+}
+
+// Llenamos el selector de marcas.
+Object.keys(MARCASYMODELOS).forEach(texto => aniadirOption(MARCA, texto));
+
+// Según marca seleccionada, llenamos el selector de modelos.
+MARCA.addEventListener('change', evento => {
+MODELO.innerHTML = DEFAULT;
+MARCASYMODELOS[evento.target.value].forEach(texto => aniadirOption(MODELO, texto));
+});
+
 //Validamos el formulario.
 function validarFormulario(event) {
 
     event.preventDefault();
-    let marca = inputMarca.value;
-    let modelo = inputModelo.value;
-    let anio = parseInt(inputAnio.value);
+    let marca = MARCA.value
+    let modelo = MODELO.value
+    let anio = ANIO.value
     let km = parseInt(inputKm.value);
     let ocupantes = parseInt(inputOcupantes.value);
     let tipo = "Moto/Autito"
@@ -152,13 +189,20 @@ function validarFormulario(event) {
             precioCompra,
             precioVenta
         );
-        vehiculos.push(agregarVehiculo);
-        formulario.reset();
-        actualizarVehiculosStorage();
-        mostrarVehiculos(vehiculos);
+        
+        if ((marca == "MARCA") || (modelo == "MODELO") || (anio == "AÑO")) {
+            alert("Comprueba los campos.")
+        }
+        else {
+            vehiculos.push(agregarVehiculo);
+            formulario.reset();
+            actualizarVehiculosStorage();
+            mostrarVehiculos(vehiculos);
+            MODELO.innerHTML = DEFAULT
+    }
 } 
 
-
+//Calculamos el costo de los vehículos ingresados.
 function calcularCosto(vehiculos) {
     let sumatoriaCosto = 0
     for (const vehiculo of vehiculos) {
@@ -183,10 +227,10 @@ function mostrarVehiculos(x) {
         sinVehiculos()
     }
     else { 
-
-        ejecutarFiltros(vehiculos)
         contenedorVehiculos.innerHTML = "";
         contenedorVentas.innerHTML = "";
+        console.log(x)
+        ejecutarFiltros(vehiculos)
         
         x.forEach((vehiculo) => {
         let costoVehiculos = calcularCosto(x)
@@ -269,7 +313,10 @@ function eliminarVehiculo(idVehiculo) {
     vehiculos.splice(indiceBorrar, 1);
     columnaBorrar.remove();
     actualizarVehiculosStorage();
-    filtro4.click()
+    console.log(vehiculos)
+    ejecutarFiltros(vehiculos)
+    mostrarVehiculos(vehiculos)
+    // filtro4.click()
 }
 
 //Guardamos el usuario en Storage.
@@ -293,19 +340,10 @@ function obtenerVehiculosStorage () {
     }
 }
 
-function obtenerUsuarioStorage () {
-    let usuarioJSON = localStorage.getItem("usuario")
-    if(usuarioJSON) {
-        usuario = usuarioJSON
-        mostrarTextoUsuario()
-    }
-}
-
 //Inicializamos el programa.
 function main() {
     inicializarElementos();
     inicializarEventos();
-    obtenerUsuarioStorage();
     obtenerVehiculosStorage();
 }
 

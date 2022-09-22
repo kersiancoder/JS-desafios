@@ -55,16 +55,21 @@
                     <h3>Ingresar vehículos</h3>
                     <form id="formulario">
                         <div class="mb-3">
-                            <label class="form-label">Marca</label>
-                            <input type="text" class="form-control" id="inputMarca" required>
+                            <select id="select-marca" required>
+                                <option disabled selected>MARCA</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Modelo</label>
-                            <input type="text" class="form-control" id="inputModelo"required>
+                            <select class="followup" id="select-modelo" required>
+                                <option disabled selected>MODELO</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Año</label>
-                            <input type="number" class="form-control" id="inputAnio" required>
+                            <select id="inputAnio" required>
+                                <option disabled selected>AÑO</option>
+                            </select>
+                            <!-- <label class="form-label">Año</label>
+                            <input type="number" class="form-control" id="inputAnio" required> -->
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Kms</label>
