@@ -35,11 +35,10 @@ const DEFAULT = MODELO.innerHTML;
 const ANIO = document.getElementById('inputAnio');
 
 //Constante de Año
-const anioActual = new Date().getFullYear();
-console.log(anioActual);
+const ANIOACTUAL = new Date().getFullYear();
 
 // For de años 1920 al Año actual.
-for (var i = anioActual; i >= 1920; i--) {
+for (var i = ANIOACTUAL; i >= 1920; i--) {
     var option = document.createElement('option');
     option.value = i;
     option.innerHTML = i;
@@ -198,7 +197,7 @@ function validarFormulario(event) {
             formulario.reset();
             actualizarVehiculosStorage();
             mostrarVehiculos(vehiculos);
-            MODELO.innerHTML = DEFAULT
+            // MODELO.innerHTML = DEFAULT
     }
 } 
 
