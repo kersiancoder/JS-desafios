@@ -339,11 +339,21 @@ function obtenerVehiculosStorage () {
     }
 }
 
+//Si hay datos en Storage los mostramos en el HTML.
+function obtenerUsuariosStorage () {
+    let usuarioAlmacenado = localStorage.getItem("usuario");
+    if (usuarioAlmacenado) {
+        usuario = usuarioAlmacenado;
+        mostrarTextoUsuario();
+    }
+}
+
 //Inicializamos el programa.
 function main() {
     inicializarElementos();
     inicializarEventos();
     obtenerVehiculosStorage();
+    obtenerUsuariosStorage();
 }
 
 main();
