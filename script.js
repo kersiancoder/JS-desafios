@@ -48,7 +48,7 @@ for (var i = ANIOACTUAL; i >= 1920; i--) {
 //Clase para crear los vehículos.
 class Vehiculo {
     static count = 0;
-    constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta) {
+    constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta, img) {
         this.id = ++this.constructor.count
         this.marca = marca
         this.modelo = modelo
@@ -59,6 +59,7 @@ class Vehiculo {
         this.ocupantes = ocupantes
         this.precioCompra = precioCompra
         this.precioVenta = precioVenta
+        this.img = `./images/${modelo}.jpg`
     }
     calcularCosto = () => this.precioCompra
     calcularVenta = () => this.precioVenta
@@ -131,9 +132,9 @@ function eliminarStorage () {
 
 // Creamos el mapa de marcas y modelos.
 const MARCASYMODELOS = {
-    PEUGEOT: ['107', '206', '508'],
+    PEUGEOT: ['107', '308GT', '2008'],
     TOYOTA: ['PRIUS', 'RAV4', 'YARIS'],
-    VOLKSWAGEN: ['GOL', 'POLO', 'T-CROSS'],
+    VOLKSWAGEN: ['GOLF', 'POLO', 'T-CROSS'],
 };
 
 //Añadimos las option según marca seleccionada.
@@ -240,17 +241,18 @@ function mostrarVehiculos(x) {
         column.id = `columna-${vehiculo.id}`;
         column.innerHTML = `
             <div class="card">
-            <div class="card-body">
-            <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
-            <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
-            <p class="card-text">Kms: <b>${vehiculo.km} Kms.</b></p>
-            <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
-            <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
-            <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
-            </div>
-            <div class="card-footer text-center">
-            <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-            </div>
+                <img src="${vehiculo.img}" class="card-img-top" alt="${vehiculo.modelo}">
+                <div class="card-body">
+                    <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
+                    <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+                    <p class="card-text">Kms: <b>${vehiculo.km} Kms.</b></p>
+                    <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+                    <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
+                    <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
+                </div>
+                <div class="card-footer text-center">
+                <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
+                </div>
             </div>`;
 
         contenedorVentas.className ="pb-2"
