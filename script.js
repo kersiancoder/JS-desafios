@@ -163,21 +163,10 @@ function validarFormulario(event) {
     let anio = ANIO.value
     let km = parseInt(inputKm.value);
     let ocupantes = parseInt(inputOcupantes.value);
-    let tipo = "Moto/Autito"
-        if (ocupantes > 6) {
-            tipo = "Camioneta/Bus"
-        }
-        if (ocupantes > 4 && ocupantes <= 6) {
-            tipo = "Auto/Camioneta"
-        }
+    let tipo = ocupantes > 6 ? "Camioneta grande" : ocupantes >= 4 ? "Auto/Camioneta" : "Auto pequeño"
     let precioCompra = parseFloat(inputPrecioCompra.value);
-    let nuevo = false;
-    let precioVenta = precioCompra * 1.5
-            if (km == 0) {
-                nuevo = true
-                precioVenta = precioCompra * 2
-            }
-
+    let nuevo = km == 0 ? true : false
+    let precioVenta = nuevo == true ? precioCompra * 2 : precioCompra * 1.5
         let agregarVehiculo = new Vehiculo(
             marca,
             modelo,
@@ -189,17 +178,15 @@ function validarFormulario(event) {
             precioCompra,
             precioVenta
         );
-        
-        if ((marca == "MARCA") || (modelo == "MODELO") || (anio == "AÑO")) {
-            alert("Comprueba los campos.")
-        }
-        else {
-            vehiculos.push(agregarVehiculo);
-            formulario.reset();
-            actualizarVehiculosStorage();
-            mostrarVehiculos(vehiculos);
-            // MODELO.innerHTML = DEFAULT
-    }
+        marca == "MARCA" ? alert("Comprueba la marca ingresada") : 
+        modelo == "MODELO" ? alert("Comprueba el modelo ingresado") : 
+        anio == "AÑO" ? alert("Comprueba el año ingresado") : (
+            vehiculos.push(agregarVehiculo),
+            formulario.reset(),
+            actualizarVehiculosStorage(),
+            mostrarVehiculos(vehiculos),
+            MODELO.innerHTML = DEFAULT
+        )
 } 
 
 //Calculamos el costo de los vehículos ingresados.
@@ -223,52 +210,48 @@ function calcularVenta(vehiculos) {
 //Mostramos los vehículos en el HTML y consola.
 function mostrarVehiculos(x) {
 
-    if (arrayVacio(x) === true) {
-        sinVehiculos()
-    }
-    else { 
-        contenedorVehiculos.innerHTML = "";
-        contenedorVentas.innerHTML = "";
-        console.log(x)
-        ejecutarFiltros(vehiculos)
-        
+    arrayVacio(x) === true ? sinVehiculos() : (
+        contenedorVehiculos.innerHTML = "",
+        contenedorVentas.innerHTML = "",
+        console.log(x),
+        ejecutarFiltros(vehiculos),
         x.forEach((vehiculo) => {
-        let costoVehiculos = calcularCosto(x)
-        let ventaVehiculos = calcularVenta(x)
-        let gananciaVehiculos = ventaVehiculos - costoVehiculos
-        let column = document.createElement("div");
-        column.className = "col-md-4 mt-3 mb-3";
-        column.id = `columna-${vehiculo.id}`;
-        column.innerHTML = `
-            <div class="card">
-                <img src="${vehiculo.img}" class="card-img-top" alt="${vehiculo.modelo}">
-                <div class="card-body">
-                    <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
-                    <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
-                    <p class="card-text">Kms: <b>${vehiculo.km} Kms.</b></p>
-                    <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
-                    <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
-                    <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
-                </div>
-                <div class="card-footer text-center">
-                <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
-                </div>
-            </div>`;
-
-        contenedorVentas.className ="pb-2"
-        contenedorVentas.innerHTML = `
-            <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
-            <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
-            <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
-            `
-
-        contenedorVehiculos.append(column);
-
-        let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-        botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
-        });  
-    }
-}   
+            let costoVehiculos = calcularCosto(x)
+            let ventaVehiculos = calcularVenta(x)
+            let gananciaVehiculos = ventaVehiculos - costoVehiculos
+            let column = document.createElement("div");
+            column.className = "col-md-4 mt-3 mb-3";
+            column.id = `columna-${vehiculo.id}`;
+            column.innerHTML = `
+                <div class="card">
+                    <img src="${vehiculo.img}" class="card-img-top" alt="${vehiculo.modelo}">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
+                        <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
+                        <p class="card-text">Kms: <b>${vehiculo.km} kms</b></p>
+                        <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
+                        <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
+                        <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
+                    </div>
+                    <div class="card-footer text-center">
+                    <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
+                    </div>
+                </div>`;
+    
+            contenedorVentas.className ="pb-2"
+            contenedorVentas.innerHTML = `
+                <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
+                <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
+                <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
+                `
+    
+            contenedorVehiculos.append(column);
+    
+            let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
+            botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
+            })
+    )
+}
 
 //Creamos los filtros
 function ejecutarFiltros(vehiculos) {
@@ -334,20 +317,19 @@ function actualizarVehiculosStorage () {
 //Si hay datos en Storage los mostramos en el HTML.
 function obtenerVehiculosStorage () {
     let vehiculosJSON = localStorage.getItem("vehiculos")
-
-    if(vehiculosJSON) {
-        vehiculos = JSON.parse(vehiculosJSON)
-        mostrarVehiculos(vehiculos);
-    }
+    vehiculosJSON != null && (
+        vehiculos = JSON.parse(vehiculosJSON),
+        mostrarVehiculos(vehiculos)
+    )
 }
 
-//Si hay datos en Storage los mostramos en el HTML.
+//Si hay usuario ingresado mostramos los vehículos.
 function obtenerUsuariosStorage () {
     let usuarioAlmacenado = localStorage.getItem("usuario");
-    if (usuarioAlmacenado) {
-        usuario = usuarioAlmacenado;
-        mostrarTextoUsuario();
-    }
+    usuarioAlmacenado != null && (
+        usuario = usuarioAlmacenado,
+        mostrarTextoUsuario()
+    )
 }
 
 //Inicializamos el programa.
