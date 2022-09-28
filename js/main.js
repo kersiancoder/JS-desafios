@@ -34,12 +34,11 @@ const MODELO = document.querySelectorAll('#select-modelo')[0];
 const DEFAULT = MODELO.innerHTML;
 const ANIO = document.getElementById('inputAnio');
 
-//Constante de Año actual (librería luxon).
-const DATETIME = luxon.DateTime
-const DT = DATETIME.now()
+//Constante de Año actual.
+const ANIOACTUAL = new Date(); 
 
 // For de 100 años al año actual.
-for (var i = DT.year; i >= DT.year - 100 ; i--) {
+for (var i = ANIOACTUAL.getFullYear(); i >= ANIOACTUAL.getFullYear() - 100 ; i--) {
     var option = document.createElement('option');
     option.value = i;
     option.innerHTML = i;
