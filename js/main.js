@@ -34,11 +34,12 @@ const MODELO = document.querySelectorAll('#select-modelo')[0];
 const DEFAULT = MODELO.innerHTML;
 const ANIO = document.getElementById('inputAnio');
 
-//Constante de Año
-const ANIOACTUAL = new Date().getFullYear();
+//Constante de Año actual (librería luxon).
+const DATETIME = luxon.DateTime
+const DT = DATETIME.now()
 
-// For de años 1920 al Año actual.
-for (var i = ANIOACTUAL; i >= 1920; i--) {
+// For de 100 años al año actual.
+for (var i = DT.year; i >= DT.year - 100 ; i--) {
     var option = document.createElement('option');
     option.value = i;
     option.innerHTML = i;
@@ -178,9 +179,35 @@ function validarFormulario(event) {
             precioCompra,
             precioVenta
         );
-        marca == "MARCA" ? alert("Comprueba la marca ingresada") : 
-        modelo == "MODELO" ? alert("Comprueba el modelo ingresado") : 
-        anio == "AÑO" ? alert("Comprueba el año ingresado") : (
+        marca == "MARCA" ? Swal.fire({
+            title: 'Error!',
+            text: 'Comprueba la marca ingresada.',
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
+        })
+        : 
+        modelo == "MODELO" ? Swal.fire({
+            title: 'Error!',
+            text: 'Comprueba el modelo ingresado.',
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
+        })
+        : 
+        anio == "AÑO" ? Swal.fire({
+            title: 'Error!',
+            text: 'Comprueba el año ingresado.',
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
+        })
+        : 
+        (
+            Swal.fire({
+                title: 'Éxito!',
+                text: 'Vehículo ingresado correctamente.',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            }),
             vehiculos.push(agregarVehiculo),
             formulario.reset(),
             actualizarVehiculosStorage(),
@@ -213,7 +240,7 @@ function mostrarVehiculos(x) {
     arrayVacio(x) === true ? sinVehiculos() : (
         contenedorVehiculos.innerHTML = "",
         contenedorVentas.innerHTML = "",
-        console.log(x),
+        console.table(x),
         ejecutarFiltros(vehiculos),
         x.forEach((vehiculo) => {
             let costoVehiculos = calcularCosto(x)
@@ -253,6 +280,34 @@ function mostrarVehiculos(x) {
     )
 }
 
+//Eliminando un vehículo con el botón
+function eliminarVehiculo (idVehiculo) {
+    Swal.fire({
+        title: '¿Está seguro de eliminar el vehículo?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, seguro',
+        cancelButtonText: 'No, no quiero'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Borrado!',
+                icon: 'success',
+                text: 'El vehículo ha sido borrado.',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            let columnaBorrar = document.getElementById(`columna-${idVehiculo}`);
+            let indiceBorrar = vehiculos.findIndex((vehiculo) => Number(vehiculo.id) === Number(idVehiculo));
+            vehiculos.splice(indiceBorrar, 1);
+            columnaBorrar.remove();
+            actualizarVehiculosStorage();
+            ejecutarFiltros(vehiculos)
+            mostrarVehiculos(vehiculos)
+        }
+    })
+}
+
 //Creamos los filtros
 function ejecutarFiltros(vehiculos) {
     let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
@@ -285,22 +340,6 @@ function sinVehiculos() {
                 </div>
             </div>`
         contenedorVentas.innerHTML = ""
-}
-
-//Eliminando un vehículo con el botón
-function eliminarVehiculo(idVehiculo) {
-    let columnaBorrar = document.getElementById(`columna-${idVehiculo}`);
-    let indiceBorrar = vehiculos.findIndex(
-        (vehiculo) => Number(vehiculo.id) === Number(idVehiculo)
-    );
-    
-    vehiculos.splice(indiceBorrar, 1);
-    columnaBorrar.remove();
-    actualizarVehiculosStorage();
-    console.log(vehiculos)
-    ejecutarFiltros(vehiculos)
-    mostrarVehiculos(vehiculos)
-    // filtro4.click()
 }
 
 //Guardamos el usuario en Storage.
