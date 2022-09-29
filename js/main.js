@@ -178,42 +178,51 @@ function validarFormulario(event) {
             precioCompra,
             precioVenta
         );
-        marca == "MARCA" ? Swal.fire({
-            title: 'Error!',
-            text: 'Comprueba la marca ingresada.',
-            icon: 'error',
-            confirmButtonText: 'Cerrar'
-        })
+        marca == "MARCA" ? SwalErrorInput ("Compruebe la marca.")
+        :
+        modelo == "MODELO" ? SwalErrorInput ("Compruebe el modelo ingresado.")
         : 
-        modelo == "MODELO" ? Swal.fire({
-            title: 'Error!',
-            text: 'Comprueba el modelo ingresado.',
-            icon: 'error',
-            confirmButtonText: 'Cerrar'
-        })
-        : 
-        anio == "AÑO" ? Swal.fire({
-            title: 'Error!',
-            text: 'Comprueba el año ingresado.',
-            icon: 'error',
-            confirmButtonText: 'Cerrar'
-        })
-        : 
+        anio == "AÑO" ? SwalErrorInput ("Compruebe el año ingresado.")
+        :
+        km < 0 ? SwalErrorInput ("Los km deben ser números positivos.")
+        :
+        ocupantes < 1 ? SwalErrorInput ("Los ocupantes deben ser mayor a 0.")
+        :
+        precioCompra < 1 ? SwalErrorInput ("El precio debe ser mayor a 0.")
+        :
         (
-            Swal.fire({
-                title: 'Éxito!',
-                text: 'Vehículo ingresado correctamente.',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1500
-            }),
+            SwalVehiculoAgregadoEliminado(`${MARCA.value} ${MODELO.value}`, "agregado", "success"),
             vehiculos.push(agregarVehiculo),
             formulario.reset(),
             actualizarVehiculosStorage(),
             mostrarVehiculos(vehiculos),
             MODELO.innerHTML = DEFAULT
         )
-} 
+}
+
+//Swal de error en inputs.
+function SwalErrorInput (texto) {
+    Swal.fire({
+        title: 'Error!',
+        text: `${texto}`,
+        icon: 'error',
+        confirmButtonText: 'Cerrar'
+    })
+}
+
+//Swal de vehículo agregado o eliminado.
+function SwalVehiculoAgregadoEliminado(vehiculo, agregadoEliminado, icon) {
+    Swal.fire({
+        toast: true,
+        icon: `${icon}`,
+        title: `${vehiculo} ${agregadoEliminado} exitosamente.`,
+        animation: false,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+})
+}
 
 //Calculamos el costo de los vehículos ingresados.
 function calcularCosto(vehiculos) {
@@ -281,21 +290,16 @@ function mostrarVehiculos(x) {
 
 //Eliminando un vehículo con el botón
 function eliminarVehiculo (idVehiculo) {
+    let vehiculoBuscado = vehiculos.find(item => item.id === idVehiculo)
     Swal.fire({
-        title: '¿Está seguro de eliminar el vehículo?',
+        title: `¿Está seguro de eliminar ${vehiculoBuscado.marca} ${vehiculoBuscado.modelo}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, seguro',
         cancelButtonText: 'No, no quiero'
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Borrado!',
-                icon: 'success',
-                text: 'El vehículo ha sido borrado.',
-                showConfirmButton: false,
-                timer: 1500
-            })
+            SwalVehiculoAgregadoEliminado(`${vehiculoBuscado.marca} ${vehiculoBuscado.modelo}`, "eliminado", "info")
             let columnaBorrar = document.getElementById(`columna-${idVehiculo}`);
             let indiceBorrar = vehiculos.findIndex((vehiculo) => Number(vehiculo.id) === Number(idVehiculo));
             vehiculos.splice(indiceBorrar, 1);
