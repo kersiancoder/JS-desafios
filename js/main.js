@@ -102,9 +102,10 @@ function inicializarEventos() {
 //Logueo del usuario.
 function identificarUsuario (event) {
     event.preventDefault();
-    usuario = inputUsuario.value
-    formularioIdentificacion.reset()
+    usuario = inputUsuario.value;
+    formularioIdentificacion.reset();
     actualizarUsuarioStorage();
+    SwalUsuario(`¡Bienvenido <b>${usuario}!</b>`, "success");
     mostrarTextoUsuario()
 }
 
@@ -128,6 +129,7 @@ function eliminarStorage () {
     contenedorUsuario.hidden = true
     vehiculosAgregados.hidden = true
     contenedorFormularioVehiculos.hidden = true
+    SwalUsuario(`¡Hasta pronto <b>${usuario}!</b>`, "info");
 }
 
 // Creamos el mapa de marcas y modelos.
@@ -198,6 +200,23 @@ function validarFormulario(event) {
             mostrarVehiculos(vehiculos),
             MODELO.innerHTML = DEFAULT
         )
+}
+
+//Swal Usuario.
+function SwalUsuario(titulo, tipo) {
+    Swal.fire({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+        popup: 'colored-toast'
+        },
+        icon: `${tipo}`,
+        title: `${titulo}`,
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true
+    })
 }
 
 //Swal de error en inputs.
