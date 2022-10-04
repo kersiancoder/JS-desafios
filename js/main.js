@@ -45,10 +45,28 @@ for (var i = ANIOACTUAL.getFullYear(); i >= ANIOACTUAL.getFullYear() - 100 ; i--
     ANIO.appendChild(option);
 }
 
+
+function asynJSON () {
+    let jsonToString
+    fetch('./js/data.json')
+    .then(res => res.json())
+    .then(data => {
+        jsonToString = JSON.stringify(data.vehiculos);
+        if (vehiculos.length == 0) {
+            console.log(vehiculos.length)
+            vehiculos = JSON.parse(jsonToString) 
+            actualizarVehiculosStorage()
+            obtenerVehiculosStorage()
+        }
+    }) 
+}
+
+
+
 //Clase para crear los vehículos.
 class Vehiculo {
-    static count = 0;
-    constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta, img) {
+    static count = 4;
+    constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta, user, img) {
         this.id = ++this.constructor.count
         this.marca = marca
         this.modelo = modelo
@@ -59,6 +77,7 @@ class Vehiculo {
         this.ocupantes = ocupantes
         this.precioCompra = precioCompra
         this.precioVenta = precioVenta
+        this.user = user
         this.img = `./images/${modelo}.jpg`
     }
     calcularCosto = () => this.precioCompra
@@ -94,10 +113,10 @@ function inicializarElementos() {
 
 //Inicializamos los eventos.
 function inicializarEventos() {
+    asynJSON();
     formularioIdentificacion.onsubmit = (event) => identificarUsuario(event)
     formulario.onsubmit = (event) => validarFormulario(event);
     btnLimpiarStorage.onclick = eliminarStorage;
-    
 }
 
 //Logueo del usuario.
@@ -123,12 +142,8 @@ function mostrarTextoUsuario () {
 
 //Eliminamos todos los datos de la Storage.
 function eliminarStorage () {
-    localStorage.clear();
-    vehiculos = [];
-    mostrarVehiculos(vehiculos);
     contenedorIdentificacion.hidden = false
     contenedorUsuario.hidden = true
-    vehiculosAgregados.hidden = true
     contenedorFormularioVehiculos.hidden = true
     SwalUsuario(`¡Hasta pronto <b>${usuario}!</b>`, "info");
 }
@@ -170,6 +185,7 @@ function validarFormulario(event) {
     let precioCompra = parseFloat(inputPrecioCompra.value);
     let nuevo = km == 0 ? true : false
     let precioVenta = nuevo == true ? precioCompra * 2 : precioCompra * 1.5
+    let user = usuario
         let agregarVehiculo = new Vehiculo(
             marca,
             modelo,
@@ -179,7 +195,8 @@ function validarFormulario(event) {
             tipo,
             ocupantes,
             precioCompra,
-            precioVenta
+            precioVenta,
+            user
         );
         marca == "MARCA" ? SwalErrorInput ("Compruebe la marca.")
         :
@@ -275,7 +292,7 @@ function mostrarVehiculos(x) {
             let ventaVehiculos = calcularVenta(x)
             let gananciaVehiculos = ventaVehiculos - costoVehiculos
             let column = document.createElement("div");
-            column.className = "col-md-4 mt-3 mb-3";
+            column.className = "col-md-3 mt-3 mb-3";
             column.id = `columna-${vehiculo.id}`;
             column.innerHTML = `
                 <div class="card">

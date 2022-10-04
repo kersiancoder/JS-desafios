@@ -1,0 +1,63 @@
+{
+    "message": "success", 
+    "vehiculos": 
+    [
+        {
+            "id" : 1 ,
+            "marca": "TOYOTA" ,
+            "modelo" : "PRIUS" ,
+            "anio" : 2022 ,
+            "km" : 0 ,
+            "nuevo" : true ,
+            "tipo" : "Auto/Camioneta" ,
+            "ocupantes" : 5 ,
+            "precioCompra" : 13500 ,
+            "precioVenta" : 27000 ,
+            "user" : "admin" ,
+            "img" : "./images/prius.jpg"
+        },
+        {
+            "id" : 2 ,
+            "marca": "PEUGEOT" ,
+            "modelo" : "107" ,
+            "anio" :2020 ,
+            "km" : 7000 ,
+            "nuevo" : false ,
+            "tipo" : "Auto pequeño" ,
+            "ocupantes" : 3 ,
+            "precioCompra" : 4500 ,
+            "precioVenta" : 6750 ,
+            "user" : "admin" ,
+            "img" : "./images/107.jpg"
+        },
+        {
+            "id" : 3 ,
+            "marca": "VOLKSWAGEN" ,
+            "modelo" : "GOLF" ,
+            "anio" :2021 ,
+            "km" : 2500 ,
+            "nuevo" : false ,
+            "tipo" : "Auto/Camioneta" ,
+            "ocupantes" : 5 ,
+            "precioCompra" : 25500 ,
+            "precioVenta" : 38250 ,
+            "user" : "admin" ,
+            "img" : "./images/golf.jpg"
+        },
+        {
+            "id" : 4 ,
+            "marca": "PEUGEOT" ,
+            "modelo" : "308GT" ,
+            "anio" :2022 ,
+            "km" : 1300 ,
+            "nuevo" : false ,
+            "tipo" : "Auto/Camioneta" ,
+            "ocupantes" : 5 ,
+            "precioCompra" : 18500 ,
+            "precioVenta" : 27750 ,
+            "user" : "admin" ,
+            "img" : "./images/308gt.jpg"
+        }
+    ], 
+    "number": 4
+}
