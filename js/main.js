@@ -26,6 +26,7 @@ let filtro1;
 let filtro2;
 let filtro3;
 let filtro4;
+let botonModal
 
 
 //Constantes de selectores.
@@ -109,6 +110,7 @@ function inicializarElementos() {
     vehiculosAgregados = document.getElementById("vehiculosAgregados")
     contenedorFormularioVehiculos = document.getElementById("contenedorFormularioVehiculos")
     inputUsuario = document.getElementById("inputUsuario")
+    botonModal = document.getElementById("botonModal")
 }
 
 //Inicializamos los eventos.
@@ -133,18 +135,21 @@ function identificarUsuario (event) {
 function mostrarTextoUsuario () {
     contenedorIdentificacion.hidden = true
     contenedorUsuario.hidden = false
+    textoUsuario.hidden = false
     textoUsuario.innerHTML = `Bienvenido `
     textoUsuario.innerHTML += `<b>${usuario}</b>`
     btnLimpiarStorage.hidden = false
     vehiculosAgregados.hidden = false
-    contenedorFormularioVehiculos.hidden = false
+    botonModal.hidden = false
 }
 
 //Eliminamos todos los datos de la Storage.
 function eliminarStorage () {
+    textoUsuario.hidden = true
+    limpiarStorage.hidden = true
+    botonModal.hidden = true
     contenedorIdentificacion.hidden = false
-    contenedorUsuario.hidden = true
-    contenedorFormularioVehiculos.hidden = true
+    contenedorUsuario.hidden = false
     SwalUsuario(`¡Hasta pronto <b>${usuario}!</b>`, "info");
     usuario = null
     mostrarVehiculos(vehiculos)
