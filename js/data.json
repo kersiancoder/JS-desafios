@@ -14,7 +14,7 @@
             "precioCompra" : 13500 ,
             "precioVenta" : 27000 ,
             "user" : "admin" ,
-            "img" : "./images/prius.jpg"
+            "img" : "./images/PRIUS.jpg"
         },
         {
             "id" : 2 ,
@@ -42,7 +42,7 @@
             "precioCompra" : 25500 ,
             "precioVenta" : 38250 ,
             "user" : "admin" ,
-            "img" : "./images/golf.jpg"
+            "img" : "./images/GOLF.jpg"
         },
         {
             "id" : 4 ,
@@ -56,7 +56,7 @@
             "precioCompra" : 18500 ,
             "precioVenta" : 27750 ,
             "user" : "admin" ,
-            "img" : "./images/308gt.jpg"
+            "img" : "./images/308GT.jpg"
         }
     ], 
     "number": 4
