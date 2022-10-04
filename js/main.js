@@ -145,9 +145,9 @@ function eliminarStorage () {
     contenedorIdentificacion.hidden = false
     contenedorUsuario.hidden = true
     contenedorFormularioVehiculos.hidden = true
+    SwalUsuario(`¡Hasta pronto <b>${usuario}!</b>`, "info");
     usuario = null
     mostrarVehiculos(vehiculos)
-    SwalUsuario(`¡Hasta pronto <b>${usuario}!</b>`, "info");
 }
 
 // Creamos el mapa de marcas y modelos.
