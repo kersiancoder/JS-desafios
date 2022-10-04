@@ -145,6 +145,8 @@ function eliminarStorage () {
     contenedorIdentificacion.hidden = false
     contenedorUsuario.hidden = true
     contenedorFormularioVehiculos.hidden = true
+    usuario = null
+    mostrarVehiculos(vehiculos)
     SwalUsuario(`¡Hasta pronto <b>${usuario}!</b>`, "info");
 }
 
@@ -322,13 +324,28 @@ function mostrarVehiculos(x) {
     
             let botonEnviarCorreo = document.getElementById(`botonEnviarCorreo-${vehiculo.id}`);
             let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
-            
+
             botonEnviarCorreo.onclick = () => swalCorreo(vehiculo.id);
             botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
+
+            userVehiculoCreado (vehiculo.user, botonEnviarCorreo, botonEliminar)
             
             })
     )
 }
+
+//Comprobando usuario logueado vs usuario que creó el vehículo
+function userVehiculoCreado (vehiculoUser, botonEnviar, botonEliminar) {
+
+    if (vehiculoUser == usuario) {
+            botonEnviar.hidden = true
+        } else {
+            botonEliminar.hidden = true
+        }
+        // botonEnviarCorreo.hidden = true
+        // botonEliminar.hidden = false
+} 
+
 
 //Eliminando un vehículo con el botón
 function eliminarVehiculo (idVehiculo) {
@@ -390,6 +407,7 @@ function sinVehiculos() {
 //Guardamos el usuario en Storage.
 function actualizarUsuarioStorage () {
     localStorage.setItem("usuario", usuario)
+    mostrarVehiculos(vehiculos)
 }
 
 //Guardamos los vehiculos en la Storage.
