@@ -10,7 +10,7 @@ let textoUsuario;
 let inputUsuario
 let btnLimpiarStorage;
 let vehiculosAgregados;
-let contenedorFormularioVehiculos
+let botonModificarPrecio
 
 //Variables para el formulario de vehículos.
 let formulario;
@@ -54,10 +54,10 @@ function asynJSON () {
     .then(data => {
         jsonToString = JSON.stringify(data.vehiculos);
         if (vehiculos.length == 0) {
-            console.log(vehiculos.length)
             vehiculos = JSON.parse(jsonToString) 
             actualizarVehiculosStorage()
             obtenerVehiculosStorage()
+            mostrarVehiculos(vehiculos)
         }
     }) 
 }
@@ -111,6 +111,7 @@ function inicializarElementos() {
     contenedorFormularioVehiculos = document.getElementById("contenedorFormularioVehiculos")
     inputUsuario = document.getElementById("inputUsuario")
     botonModal = document.getElementById("botonModal")
+    botonModificarPrecio = document.getElementById("botonModificarPrecio")
 }
 
 //Inicializamos los eventos.
@@ -151,7 +152,8 @@ function eliminarStorage () {
     contenedorIdentificacion.hidden = false
     contenedorUsuario.hidden = false
     SwalUsuario(`¡Hasta pronto <b>${usuario}!</b>`, "info");
-    usuario = null
+    localStorage.removeItem("usuario")
+    usuario = 0
     mostrarVehiculos(vehiculos)
 }
 
@@ -311,9 +313,11 @@ function mostrarVehiculos(x) {
                         <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
                         <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
                         <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
+                        <p class="card-text">Vendedor: <b>${vehiculo.user}</b></p>
                     </div>
                     <div class="card-footer text-center">
                     <button class="btn btn-primary" id="botonEnviarCorreo-${vehiculo.id}" >Test Drive</button>
+                    <button class="btn btn-secondary" id="botonModificarPrecio-${vehiculo.id}" >Modificar</button>
                     <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
                     </div>
                 </div>`;
@@ -326,30 +330,58 @@ function mostrarVehiculos(x) {
                 `
     
             contenedorVehiculos.append(column);
-    
+
+            let botonModificarPrecio = document.getElementById(`botonModificarPrecio-${vehiculo.id}`)
             let botonEnviarCorreo = document.getElementById(`botonEnviarCorreo-${vehiculo.id}`);
             let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
 
+            botonModificarPrecio.onclick = () => swalModificarPrecio(vehiculo.id);
             botonEnviarCorreo.onclick = () => swalCorreo(vehiculo.id);
             botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
-            userVehiculoCreado (vehiculo.user, botonEnviarCorreo, botonEliminar)
+            userVehiculoCreado (vehiculo.user, botonEnviarCorreo, botonEliminar, botonModificarPrecio)
             
             })
     )
 }
 
 //Comprobando usuario logueado vs usuario que creó el vehículo
-function userVehiculoCreado (vehiculoUser, botonEnviar, botonEliminar) {
+function userVehiculoCreado (vehiculoUser, botonEnviar, botonEliminar, botonModificarPrecio) {
 
     if (vehiculoUser == usuario) {
             botonEnviar.hidden = true
         } else {
             botonEliminar.hidden = true
+            botonModificarPrecio.hidden = true
         }
-        // botonEnviarCorreo.hidden = true
-        // botonEliminar.hidden = false
 } 
+
+//Modificamos vehículos con el botón
+async function swalModificarPrecio (idVehiculo) {
+    
+    const { value: precio } = await Swal.fire({
+        title: 'Ingrese nuevo precio de compra',
+        input: 'number',
+        inputLabel: 'Precio de compra',
+        inputPlaceholder: 'Ingrese en U$S precio de compra',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Salir'
+        })
+        if (precio) {
+            let vehiculoBuscado = vehiculos.find(item => item.id === idVehiculo)
+            console.log(vehiculoBuscado)
+            vehiculoBuscado.precioCompra = Number.parseInt(`${precio}`)
+            if (vehiculoBuscado.nuevo == true) {
+                vehiculoBuscado.precioVenta = vehiculoBuscado.precioCompra * 2
+            } else {
+                vehiculoBuscado.precioVenta = vehiculoBuscado.precioCompra * 1.5
+            }
+            Swal.fire(`Nuevo precio de compra: ${precio} U$S.<br> Nuevo precio de venta: ${vehiculoBuscado.precioVenta} U$S.`)
+            actualizarVehiculosStorage()
+            mostrarVehiculos(vehiculos)
+    }
+}
 
 
 //Eliminando un vehículo con el botón
@@ -435,7 +467,8 @@ function obtenerUsuariosStorage () {
     let usuarioAlmacenado = localStorage.getItem("usuario");
     usuarioAlmacenado != null && (
         usuario = usuarioAlmacenado,
-        mostrarTextoUsuario()
+        mostrarTextoUsuario(),
+        mostrarVehiculos(vehiculos)
     )
 }
 
