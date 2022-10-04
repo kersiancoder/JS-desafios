@@ -125,7 +125,7 @@ function inicializarEventos() {
 //Logueo del usuario.
 function identificarUsuario (event) {
     event.preventDefault();
-    usuario = inputUsuario.value;
+    usuario = inputUsuario.value.toUpperCase();
     formularioIdentificacion.reset();
     actualizarUsuarioStorage();
     SwalUsuario(`¡Bienvenido <b>${usuario}!</b>`, "success");
@@ -348,7 +348,7 @@ function mostrarVehiculos(x) {
 //Comprobando usuario logueado vs usuario que creó el vehículo
 function userVehiculoCreado (vehiculoUser, botonEnviar, botonEliminar, botonModificarPrecio) {
 
-    if (vehiculoUser == usuario) {
+    if ((vehiculoUser.toUpperCase()) == usuario) {
             botonEnviar.hidden = true
         } else {
             botonEliminar.hidden = true
@@ -358,19 +358,16 @@ function userVehiculoCreado (vehiculoUser, botonEnviar, botonEliminar, botonModi
 
 //Modificamos vehículos con el botón
 async function swalModificarPrecio (idVehiculo) {
-    
+    let vehiculoBuscado = vehiculos.find(item => item.id === idVehiculo)
     const { value: precio } = await Swal.fire({
-        title: 'Ingrese nuevo precio de compra',
+        title: `Modificar ${vehiculoBuscado.marca} ${vehiculoBuscado.modelo} ${vehiculoBuscado.anio}`,
         input: 'number',
-        inputLabel: 'Precio de compra',
         inputPlaceholder: 'Ingrese en U$S precio de compra',
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Salir'
         })
         if (precio) {
-            let vehiculoBuscado = vehiculos.find(item => item.id === idVehiculo)
-            console.log(vehiculoBuscado)
             vehiculoBuscado.precioCompra = Number.parseInt(`${precio}`)
             if (vehiculoBuscado.nuevo == true) {
                 vehiculoBuscado.precioVenta = vehiculoBuscado.precioCompra * 2
@@ -489,16 +486,16 @@ function swalCorreo (idVehiculo) {
             }
             return { nombre: nombre, telefono: telefono }
         }
-        }).then((result) => {
+    })
+    .then((result) => {
         Swal.fire({
             title: 'Correo enviado!',
             text: `Gracias ${result.value.nombre.toUpperCase()} te estaremos contactando a la brevedad.`,
             icon: 'success',
             showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
+            timer: 3000,                timerProgressBar: true
         })
-        enviarCorreo(idVehiculo, result)
+            enviarCorreo(idVehiculo, result)
     })
 }
 
