@@ -97,6 +97,7 @@ function inicializarEventos() {
     formularioIdentificacion.onsubmit = (event) => identificarUsuario(event)
     formulario.onsubmit = (event) => validarFormulario(event);
     btnLimpiarStorage.onclick = eliminarStorage;
+    
 }
 
 //Logueo del usuario.
@@ -288,6 +289,7 @@ function mostrarVehiculos(x) {
                         <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
                     </div>
                     <div class="card-footer text-center">
+                    <button class="btn btn-primary" id="botonEnviarCorreo-${vehiculo.id}" >Test Drive</button>
                     <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
                     </div>
                 </div>`;
@@ -301,8 +303,12 @@ function mostrarVehiculos(x) {
     
             contenedorVehiculos.append(column);
     
+            let botonEnviarCorreo = document.getElementById(`botonEnviarCorreo-${vehiculo.id}`);
             let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
+            
+            botonEnviarCorreo.onclick = () => swalCorreo(vehiculo.id);
             botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
+            
             })
     )
 }
@@ -391,6 +397,52 @@ function obtenerUsuariosStorage () {
         usuario = usuarioAlmacenado,
         mostrarTextoUsuario()
     )
+}
+
+function swalCorreo (idVehiculo) {
+    Swal.fire({
+        title: 'Solicitud Test Drive',
+        html: `<input type="text" id="correoNombre" class="swal2-input" placeholder="Nombre">
+        <input type="number" id="correoTelefono" class="swal2-input" placeholder="Celular">`,
+        showCancelButton: true,
+        cancelButtonText: 'Cerrar',
+        confirmButtonText: 'Enviar',
+        focusConfirm: false,
+        preConfirm: () => {
+            const nombre = Swal.getPopup().querySelector('#correoNombre').value
+            const telefono = Swal.getPopup().querySelector('#correoTelefono').value
+            if (!nombre || !telefono) {
+            Swal.showValidationMessage(`Ingrese su nombre y teléfono.`)
+            }
+            return { nombre: nombre, telefono: telefono }
+        }
+        }).then((result) => {
+        Swal.fire({
+            title: 'Correo enviado!',
+            text: `Gracias ${result.value.nombre.toUpperCase()} te estaremos contactando a la brevedad.`,
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        })
+        enviarCorreo(idVehiculo, result)
+    })
+}
+
+function enviarCorreo (idVehiculo, result) {
+    let vehiculoBuscado = vehiculos.find(item => item.id === idVehiculo)
+    let templateParams = {
+        nombre: `${result.value.nombre.toUpperCase()}`,
+        celular: `${result.value.telefono}`,
+        vehiculo: `${vehiculoBuscado.marca} ${vehiculoBuscado.modelo} ${vehiculoBuscado.anio} ID: ${vehiculoBuscado.id}`,
+        }
+
+    emailjs.send('service_aqd1cxb','template_8y9442d', templateParams)
+        .then(function(response) {
+        console.log('CORREO ENVIADO!', response.status, response.text);
+        }, function(error) {
+        console.log('FALLA...', error);
+        });
 }
 
 //Inicializamos el programa.
