@@ -369,6 +369,7 @@ async function swalModificarPrecio (idVehiculo) {
         inputPlaceholder: 'Ingrese en U$S precio de compra',
         showCancelButton: true,
         confirmButtonText: 'Confirmar',
+        confirmButtonColor: '#0d6efd',
         cancelButtonText: 'Salir'
         })
         if (precio) {
@@ -393,6 +394,7 @@ function eliminarVehiculo (idVehiculo) {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, seguro',
+        confirmButtonColor: '#0d6efd',
         cancelButtonText: 'No, no quiero'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -481,6 +483,7 @@ function swalCorreo (idVehiculo) {
         showCancelButton: true,
         cancelButtonText: 'Cerrar',
         confirmButtonText: 'Enviar',
+        confirmButtonColor: '#0d6efd',
         focusConfirm: false,
         preConfirm: () => {
             const nombre = Swal.getPopup().querySelector('#correoNombre').value
