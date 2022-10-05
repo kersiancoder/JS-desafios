@@ -11,6 +11,50 @@
 </head>
 
 <body>
+
+    <nav class="navbar navbar-expand-xl navbar-light bg-light mr-4">
+        <div class="container-fluid gap-3">
+            <a class="navbar-brand" href="#">Automotora Maxi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse gap-3" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item p-3">
+                <a class="link-primary" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" id="botonModal" hidden>Vender vehículos</a>
+                </li>
+                <li class="nav-item p-3">
+                <a class="link-primary" href="#" data-bs-toggle="modal" data-bs-target="#modalExplicativo" id="botonModalExplicativo" hidden>Información</a>
+                </li>
+                <li class="nav-item p-3">
+                <a class="link-danger" href="#" id="limpiarStorage" hidden>Salir</a>
+                </li>
+                <li class="nav-item p-3">
+                <a class="link-dark" href="#" id="limpiarStorageTodo" hidden>Reiniciar programa</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <div class="btn-toolbar col-md-12 text-center justify-content-center" role="group" aria-label="Basic radio toggle button group">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <input type="radio" class="btn-check" name="btnradio" id="filtro1" autocomplete="off">
+                        <label class="btn btn-outline-success" for="filtro1">Filtrar nuevos</label>
+                    </div>
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <input type="radio" class="btn-check" name="btnradio" id="filtro2" autocomplete="off">
+                        <label class="btn btn-outline-success" for="filtro2">Filtrar usados</label>
+                    </div>
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <input type="radio" class="btn-check" name="btnradio" id="filtro3" autocomplete="off">
+                        <label class="btn btn-outline-success" for="filtro3">Filtrar ocupantes mayor a 6</label>
+                    </div>
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <input type="radio" class="btn-check" name="btnradio" id="filtro4" autocomplete="off" checked>
+                        <label class="btn btn-outline-success" for="filtro4">Ver todos</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
     
     <div class="container-fluid p-3">
         <div class="row text-center">
@@ -18,7 +62,6 @@
             <div class="col-sm">
                 <div class="m-auto" id="contenedorUsuario">
                     <p id="textoUsuario"></p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="botonModal" hidden>Vender vehículos</button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -61,7 +104,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalExplicativo" id="botonModalExplicativo" hidden>Información</button>
+                
                     <div class="modal fade" id="modalExplicativo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -86,36 +129,15 @@
                             <input placeholder="Ingresar usuario" type="text" class="form-control" id="inputUsuario" required>
                             <button type="submit" class="btn btn-primary">Identificarse</button>
                         </div>
-                    </div>
                     </form>
-                    <button class="btn btn-danger" id="limpiarStorage" hidden>Salir</button>
+                </div>
                 </div>
             </div>
             <div class="col-sm align-self-end">
-            <button class="btn btn-dark" id="limpiarStorageTodo" hidden>Reiniciar programa</button>
             </div>
         </div>
-        
         <div id="vehiculosAgregados" class="row pt-4">
             <div id="filtro mt-3">
-                <div class="btn-toolbar col-md-12 text-center justify-content-center" role="group" aria-label="Basic radio toggle button group">
-                    <div class="btn-group me-2" role="group" aria-label="First group">
-                        <input type="radio" class="btn-check" name="btnradio" id="filtro1" autocomplete="off">
-                        <label class="btn btn-outline-success" for="filtro1">Filtrar nuevos</label>
-                    </div>
-                    <div class="btn-group me-2" role="group" aria-label="First group">
-                        <input type="radio" class="btn-check" name="btnradio" id="filtro2" autocomplete="off">
-                        <label class="btn btn-outline-success" for="filtro2">Filtrar usados</label>
-                    </div>
-                    <div class="btn-group me-2" role="group" aria-label="First group">
-                        <input type="radio" class="btn-check" name="btnradio" id="filtro3" autocomplete="off">
-                        <label class="btn btn-outline-success" for="filtro3">Filtrar ocupantes mayor a 6</label>
-                    </div>
-                    <div class="btn-group me-2" role="group" aria-label="First group">
-                        <input type="radio" class="btn-check" name="btnradio" id="filtro4" autocomplete="off" checked>
-                        <label class="btn btn-outline-success" for="filtro4">Ver todos</label>
-                    </div>
-                </div>
             </div>
             <hr>
             <div class="col-md-12">  
