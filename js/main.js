@@ -360,11 +360,16 @@ function mostrarVehiculos(x) {
                 </div>`;
     
             contenedorVentas.className ="pb-2"
-            contenedorVentas.innerHTML = `
-                <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${usuario} es de ${costoVehiculosMiles} U$S.</b></p>
-                <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${usuario} es de ${ventaVehiculosMiles} U$S.</b></p>
-                <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${usuario} es de ${gananciaVehiculosMiles} U$S.</b></p>
-                `
+            costoVehiculos == 0 ? 
+                contenedorVentas.innerHTML = `
+                    <p class="card-text text-center"><b>El usuario ${usuario} no tiene vehículos a la venta.</b></p>
+                    `
+                :
+                    contenedorVentas.innerHTML = `
+                    <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${usuario} es de ${costoVehiculosMiles} U$S.</b></p>
+                    <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${usuario} es de ${ventaVehiculosMiles} U$S.</b></p>
+                    <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${usuario} es de ${gananciaVehiculosMiles} U$S.</b></p>
+                    `
     
             contenedorVehiculos.append(column);
 
