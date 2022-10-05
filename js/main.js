@@ -80,7 +80,7 @@ class Vehiculo {
         this.precioCompra = precioCompra
         this.precioVenta = precioVenta
         this.user = user
-        this.img = `./images/${modelo}.jpg`
+        this.img = `/images/${modelo}.jpg`
     }
     calcularCosto = () => this.precioCompra
     calcularVenta = () => this.precioVenta
@@ -546,6 +546,9 @@ function enviarCorreo (idVehiculo, result) {
         celular: `${result.value.telefono}`,
         mail: `${result.value.mail}`,
         vehiculo: `${vehiculoBuscado.marca} ${vehiculoBuscado.modelo} ${vehiculoBuscado.anio} ID: ${vehiculoBuscado.id}`,
+        image: `<img data-surl="cid:${vehiculoBuscado.marca}" src="blob:https://desafiojsmaximilianoheijo.netlify.app/${vehiculoBuscado.img}" alt="${vehiculoBuscado.marca}" width="260" height="260">`
+        
+
         }
 
     emailjs.send('service_aqd1cxb','template_8y9442d', templateParams)
