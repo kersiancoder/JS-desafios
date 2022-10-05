@@ -353,9 +353,9 @@ function mostrarVehiculos(x) {
                         <p class="card-text">Vendedor: <b>${vehiculo.user}</b></p>
                     </div>
                     <div class="card-footer text-center">
-                    <button class="btn btn-primary" id="botonEnviarCorreo-${vehiculo.id}" >Test Drive</button>
-                    <button class="btn btn-secondary" id="botonModificarPrecio-${vehiculo.id}" >Modificar</button>
-                    <button class="btn btn-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
+                    <button class="btn btn-outline-primary" id="botonEnviarCorreo-${vehiculo.id}" >Test Drive</button>
+                    <button class="btn btn-outline-secondary" id="botonModificarPrecio-${vehiculo.id}" >Modificar</button>
+                    <button class="btn btn-outline-danger" id="botonEliminar-${vehiculo.id}" >Eliminar</button>
                     </div>
                 </div>`;
     
