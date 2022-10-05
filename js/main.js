@@ -157,7 +157,7 @@ function mostrarTextoUsuario () {
     textoUsuario.innerHTML += `<b>${usuario}</b>`
     btnLimpiarStorage.hidden = false
     vehiculosAgregados.hidden = false
-    botonModal.hidden = false
+    botonModal.hidden = false;
     botonModalExplicativo.hidden = false
     contenedorVentas.hidden = false
     limpiarStorageTodo.hidden = false
