@@ -159,6 +159,7 @@ function mostrarTextoUsuario () {
     vehiculosAgregados.hidden = false
     botonModal.hidden = false
     botonModalExplicativo.hidden = false
+    contenedorVentas.hidden = false
     limpiarStorageTodo.hidden = false
 }
 
@@ -173,6 +174,7 @@ function eliminarStorage () {
     localStorage.removeItem("usuario")
     botonModalExplicativo.hidden = true
     limpiarStorageTodo.hidden = true
+    contenedorVentas.hidden = true
     usuario = 0
     mostrarVehiculos(vehiculos)
 }
@@ -301,7 +303,9 @@ function SwalVehiculoAgregadoEliminado(vehiculo, agregadoEliminado, icon) {
 function calcularCosto(vehiculos) {
     let sumatoriaCosto = 0
     for (const vehiculo of vehiculos) {
+        if (usuario == vehiculo.user) {
         sumatoriaCosto += vehiculo.precioCompraNum
+    }
     }
     return sumatoriaCosto;
 }
@@ -310,8 +314,9 @@ function calcularCosto(vehiculos) {
 function calcularVenta(vehiculos) {
     let sumatoriaVenta = 0
     for (const vehiculo of vehiculos) {
+        if (usuario == vehiculo.user) {
         sumatoriaVenta += vehiculo.precioVentaNum
-    }
+    }}
     return sumatoriaVenta;
 }
 
@@ -356,9 +361,9 @@ function mostrarVehiculos(x) {
     
             contenedorVentas.className ="pb-2"
             contenedorVentas.innerHTML = `
-                <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculosMiles} U$S.</b></p>
-                <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculosMiles} U$S.</b></p>
-                <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculosMiles} U$S.</b></p>
+                <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${usuario} es de ${costoVehiculosMiles} U$S.</b></p>
+                <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${usuario} es de ${ventaVehiculosMiles} U$S.</b></p>
+                <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${usuario} es de ${gananciaVehiculosMiles} U$S.</b></p>
                 `
     
             contenedorVehiculos.append(column);
@@ -404,12 +409,16 @@ async function swalModificarPrecio (idVehiculo) {
         })
         if (precio) {
             vehiculoBuscado.precioCompra = formatter.format(`${precio}`)
+            vehiculoBuscado.precioCompraNum = parseFloat(`${precio}`)
+            vehiculoBuscado.cuotasVenta = (`${precio}` / 12)
             if (vehiculoBuscado.nuevo == true) {
                 let precioVentaNuevo = `${precio}` * 2
                 vehiculoBuscado.precioVenta = formatter.format(precioVentaNuevo)
+                vehiculoBuscado.precioVentaNum = parseFloat(precioVentaNuevo)
             } else {
                 let precioVentaUsado = `${precio}` * 1.5
                 vehiculoBuscado.precioVenta = formatter.format(precioVentaUsado)
+                vehiculoBuscado.precioVentaNum = parseFloat(precioVentaUsado)
             }
             Swal.fire(`Nuevo precio de compra: ${vehiculoBuscado.precioCompra} U$S.<br> Nuevo precio de venta: ${vehiculoBuscado.precioVenta} U$S.`)
             actualizarVehiculosStorage()
