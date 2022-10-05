@@ -546,7 +546,7 @@ function enviarCorreo (idVehiculo, result) {
         celular: `${result.value.telefono}`,
         mail: `${result.value.mail}`,
         vehiculo: `${vehiculoBuscado.marca} ${vehiculoBuscado.modelo} ${vehiculoBuscado.anio} ID: ${vehiculoBuscado.id}`,
-        image: `<img data-surl="cid:${vehiculoBuscado.marca}" src="blob:https://desafiojsmaximilianoheijo.netlify.app/${vehiculoBuscado.img}" alt="${vehiculoBuscado.marca}" width="260" height="260">`
+        image: `<img src="https://desafiojsmaximilianoheijo.netlify.app/${vehiculoBuscado.img}" alt="${vehiculoBuscado.marca}" width="260" height="260">`
         
 
         }
