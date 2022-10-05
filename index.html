@@ -74,6 +74,7 @@
                                     <p>Para solicitar un test drive no debe estar ingresado el usuario que registró dicho vehículo.</p>
                                     <p>Para vehículos nuevos (0 Km) el precio de venta se calcula al 200% del precio de compra.</p>
                                     <p>Para vehículos usados el precio de venta se calcula al 150% del precio de compra.</p>
+                                    <p>El botón de reiniciar programa borrará todos los vehículos para luego dejar creados únicamente los que estan en el JSON.</p>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +91,9 @@
                     <button class="btn btn-danger" id="limpiarStorage" hidden>Salir</button>
                 </div>
             </div>
-            <div class="col-sm"></div>
+            <div class="col-sm align-self-end">
+            <button class="btn btn-dark" id="limpiarStorageTodo" hidden>Reiniciar programa</button>
+            </div>
         </div>
         
         <div id="vehiculosAgregados" class="row pt-4">

@@ -1,6 +1,8 @@
 //Variables de información.
 let vehiculos = [];
 let usuario;
+let formatter = new Intl.NumberFormat('es-UY');
+let limpiarStorageTodo
 
 //Variables para autenticación y usuario.
 let formularioIdentificacion;
@@ -47,8 +49,8 @@ for (var i = ANIOACTUAL.getFullYear(); i >= ANIOACTUAL.getFullYear() - 100 ; i--
     ANIO.appendChild(option);
 }
 
-
-function asynJSON () {
+//Cargamos por defecto 4 vehículos desde un JSON.
+function cargaJSON () {
     let jsonToString
     fetch('./js/data.json')
     .then(res => res.json())
@@ -62,8 +64,6 @@ function asynJSON () {
         }
     }) 
 }
-
-
 
 //Clase para crear los vehículos.
 class Vehiculo {
@@ -114,14 +114,25 @@ function inicializarElementos() {
     botonModal = document.getElementById("botonModal")
     botonModificarPrecio = document.getElementById("botonModificarPrecio")
     botonModalExplicativo = document.getElementById("botonModalExplicativo")
+    limpiarStorageTodo = document.getElementById("limpiarStorageTodo")
 }
 
 //Inicializamos los eventos.
 function inicializarEventos() {
-    asynJSON();
+    cargaJSON();
     formularioIdentificacion.onsubmit = (event) => identificarUsuario(event)
     formulario.onsubmit = (event) => validarFormulario(event);
     btnLimpiarStorage.onclick = eliminarStorage;
+    limpiarStorageTodo.onclick = eliminarStorageTodo
+}
+
+//Reiniciamos el programa.
+function eliminarStorageTodo () {
+    localStorage.clear()
+    vehiculos = []
+    eliminarStorage()
+    cargaJSON()
+    console.log(vehiculos)
 }
 
 //Logueo del usuario.
@@ -145,6 +156,7 @@ function mostrarTextoUsuario () {
     vehiculosAgregados.hidden = false
     botonModal.hidden = false
     botonModalExplicativo.hidden = false
+    limpiarStorageTodo.hidden = false
 }
 
 //Eliminamos todos los datos de la Storage.
@@ -157,6 +169,7 @@ function eliminarStorage () {
     SwalUsuario(`¡Hasta pronto <b>${usuario}!</b>`, "info");
     localStorage.removeItem("usuario")
     botonModalExplicativo.hidden = true
+    limpiarStorageTodo.hidden = true
     usuario = 0
     mostrarVehiculos(vehiculos)
 }
@@ -191,24 +204,27 @@ function validarFormulario(event) {
     event.preventDefault();
     let marca = MARCA.value
     let modelo = MODELO.value
-    let anio = ANIO.value
-    let km = parseInt(inputKm.value);
-    let ocupantes = parseInt(inputOcupantes.value);
+    let anio = parseFloat(ANIO.value)
+    let km = parseFloat(inputKm.value);
+    let kmMiles = formatter.format(km)
+    let ocupantes = parseFloat(inputOcupantes.value);
     let tipo = ocupantes > 6 ? "Camioneta grande" : ocupantes >= 4 ? "Auto/Camioneta" : "Auto pequeño"
     let precioCompra = parseFloat(inputPrecioCompra.value);
+    let precioCompraMiles = formatter.format(precioCompra)
     let nuevo = km == 0 ? true : false
     let precioVenta = nuevo == true ? precioCompra * 2 : precioCompra * 1.5
+    let precioVentaMiles = formatter.format(precioVenta)
     let user = usuario
         let agregarVehiculo = new Vehiculo(
             marca,
             modelo,
             anio,
-            km,
+            kmMiles,
             nuevo,
             tipo,
             ocupantes,
-            precioCompra,
-            precioVenta,
+            precioCompraMiles,
+            precioVentaMiles,
             user
         );
         marca == "MARCA" ? SwalErrorInput ("Compruebe la marca.")
@@ -305,7 +321,7 @@ function mostrarVehiculos(x) {
             let ventaVehiculos = calcularVenta(x)
             let gananciaVehiculos = ventaVehiculos - costoVehiculos
             let column = document.createElement("div");
-            column.className = "col-md-3 mt-3 mb-3";
+            column.className = "col-lg-3 col-sm-6 mt-3 mb-3";
             column.id = `columna-${vehiculo.id}`;
             column.innerHTML = `
                 <div class="card">
@@ -373,13 +389,15 @@ async function swalModificarPrecio (idVehiculo) {
         cancelButtonText: 'Salir'
         })
         if (precio) {
-            vehiculoBuscado.precioCompra = Number.parseInt(`${precio}`)
+            vehiculoBuscado.precioCompra = formatter.format(`${precio}`)
             if (vehiculoBuscado.nuevo == true) {
-                vehiculoBuscado.precioVenta = vehiculoBuscado.precioCompra * 2
+                let precioVentaNuevo = `${precio}` * 2
+                vehiculoBuscado.precioVenta = formatter.format(precioVentaNuevo)
             } else {
-                vehiculoBuscado.precioVenta = vehiculoBuscado.precioCompra * 1.5
+                let precioVentaUsado = `${precio}` * 1.5
+                vehiculoBuscado.precioVenta = formatter.format(precioVentaUsado)
             }
-            Swal.fire(`Nuevo precio de compra: ${precio} U$S.<br> Nuevo precio de venta: ${vehiculoBuscado.precioVenta} U$S.`)
+            Swal.fire(`Nuevo precio de compra: ${vehiculoBuscado.precioCompra} U$S.<br> Nuevo precio de venta: ${vehiculoBuscado.precioVenta} U$S.`)
             actualizarVehiculosStorage()
             mostrarVehiculos(vehiculos)
     }

@@ -11,8 +11,8 @@
             "nuevo" : true ,
             "tipo" : "Auto/Camioneta" ,
             "ocupantes" : 5 ,
-            "precioCompra" : 13500 ,
-            "precioVenta" : 27000 ,
+            "precioCompra" : "13.500" ,
+            "precioVenta" : "27.000" ,
             "user" : "ADMIN" ,
             "img" : "./images/PRIUS.jpg"
         },
@@ -25,8 +25,8 @@
             "nuevo" : false ,
             "tipo" : "Auto pequeño" ,
             "ocupantes" : 3 ,
-            "precioCompra" : 4500 ,
-            "precioVenta" : 6750 ,
+            "precioCompra" : "4.500" ,
+            "precioVenta" : "6.750" ,
             "user" : "ADMIN" ,
             "img" : "./images/107.jpg"
         },
@@ -39,8 +39,8 @@
             "nuevo" : false ,
             "tipo" : "Auto/Camioneta" ,
             "ocupantes" : 5 ,
-            "precioCompra" : 25500 ,
-            "precioVenta" : 38250 ,
+            "precioCompra" : "25.500" ,
+            "precioVenta" : "38.250" ,
             "user" : "ADMIN" ,
             "img" : "./images/GOLF.jpg"
         },
@@ -53,8 +53,8 @@
             "nuevo" : false ,
             "tipo" : "Auto/Camioneta" ,
             "ocupantes" : 5 ,
-            "precioCompra" : 18500 ,
-            "precioVenta" : 27750 ,
+            "precioCompra" : "18.500" ,
+            "precioVenta" : "27.750" ,
             "user" : "ADMIN" ,
             "img" : "./images/308GT.jpg"
         }
