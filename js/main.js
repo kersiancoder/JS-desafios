@@ -497,7 +497,8 @@ function swalCorreo (idVehiculo) {
     Swal.fire({
         title: 'Solicitud Test Drive',
         html: `<input type="text" id="correoNombre" class="swal2-input" placeholder="Nombre">
-        <input type="number" id="correoTelefono" class="swal2-input" placeholder="Celular">`,
+        <input type="number" id="correoTelefono" class="swal2-input" placeholder="Celular">
+        <input type="email" id="correoMail" class="swal2-input" placeholder="Email">`,
         showCancelButton: true,
         cancelButtonText: 'Cerrar',
         confirmButtonText: 'Enviar',
@@ -506,10 +507,14 @@ function swalCorreo (idVehiculo) {
         preConfirm: () => {
             const nombre = Swal.getPopup().querySelector('#correoNombre').value
             const telefono = Swal.getPopup().querySelector('#correoTelefono').value
-            if (!nombre || !telefono) {
-            Swal.showValidationMessage(`Ingrese su nombre y teléfono.`)
+            const mail = Swal.getPopup().querySelector('#correoMail').value
+            if (validateEmail(mail) == false) {
+                Swal.showValidationMessage(`Ingrese un email válido.`)
             }
-            return { nombre: nombre, telefono: telefono }
+            if (!nombre || !telefono || !mail) {
+            Swal.showValidationMessage(`Ingrese su nombre, teléfono y email.`)
+            }
+            return { nombre: nombre, telefono: telefono, mail: mail }
         }
     })
     .then((result) => {
@@ -524,11 +529,22 @@ function swalCorreo (idVehiculo) {
     })
 }
 
+//Validamos si es un correo válido.
+function validateEmail(mail) 
+            {
+                var re = /\S+@\S+\.\S+/;
+                console.log(mail)
+                return re.test(mail);
+                
+            }
+
+//Enviar correo de Test Drive.
 function enviarCorreo (idVehiculo, result) {
     let vehiculoBuscado = vehiculos.find(item => item.id === idVehiculo)
     let templateParams = {
         nombre: `${result.value.nombre.toUpperCase()}`,
         celular: `${result.value.telefono}`,
+        mail: `${result.value.mail}`,
         vehiculo: `${vehiculoBuscado.marca} ${vehiculoBuscado.modelo} ${vehiculoBuscado.anio} ID: ${vehiculoBuscado.id}`,
         }
 
