@@ -68,7 +68,7 @@ function cargaJSON () {
 //Clase para crear los vehículos.
 class Vehiculo {
     static count = 4;
-    constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompra, precioVenta, user, img) {
+    constructor(marca, modelo, anio, km, nuevo, tipo, ocupantes, precioCompraNum, precioVentaNum, precioCompra, precioVenta, cuotasVenta, user, img) {
         this.id = ++this.constructor.count
         this.marca = marca
         this.modelo = modelo
@@ -79,11 +79,14 @@ class Vehiculo {
         this.ocupantes = ocupantes
         this.precioCompra = precioCompra
         this.precioVenta = precioVenta
+        this.precioCompraNum = precioCompraNum
+        this.precioVentaNum = precioVentaNum
+        this.cuotasVenta = cuotasVenta
         this.user = user
         this.img = `/images/${modelo}.jpg`
     }
-    calcularCosto = () => this.precioCompra
-    calcularVenta = () => this.precioVenta
+    calcularCosto = () => this.precioCompraNum
+    calcularVenta = () => this.precioVentaNum
 }
 
 //Inicializamos los elementos.
@@ -214,6 +217,7 @@ function validarFormulario(event) {
     let nuevo = km == 0 ? true : false
     let precioVenta = nuevo == true ? precioCompra * 2 : precioCompra * 1.5
     let precioVentaMiles = formatter.format(precioVenta)
+    let cuotasVenta = (precioVenta / 12)
     let user = usuario
         let agregarVehiculo = new Vehiculo(
             marca,
@@ -223,8 +227,11 @@ function validarFormulario(event) {
             nuevo,
             tipo,
             ocupantes,
+            precioCompra,
+            precioVenta,
             precioCompraMiles,
             precioVentaMiles,
+            cuotasVenta,
             user
         );
         marca == "MARCA" ? SwalErrorInput ("Compruebe la marca.")
@@ -294,7 +301,7 @@ function SwalVehiculoAgregadoEliminado(vehiculo, agregadoEliminado, icon) {
 function calcularCosto(vehiculos) {
     let sumatoriaCosto = 0
     for (const vehiculo of vehiculos) {
-        sumatoriaCosto += vehiculo.precioCompra
+        sumatoriaCosto += vehiculo.precioCompraNum
     }
     return sumatoriaCosto;
 }
@@ -303,7 +310,7 @@ function calcularCosto(vehiculos) {
 function calcularVenta(vehiculos) {
     let sumatoriaVenta = 0
     for (const vehiculo of vehiculos) {
-        sumatoriaVenta += vehiculo.precioVenta
+        sumatoriaVenta += vehiculo.precioVentaNum
     }
     return sumatoriaVenta;
 }
@@ -318,8 +325,12 @@ function mostrarVehiculos(x) {
         ejecutarFiltros(vehiculos),
         x.forEach((vehiculo) => {
             let costoVehiculos = calcularCosto(x)
+            let costoVehiculosMiles = formatter.format(costoVehiculos)
             let ventaVehiculos = calcularVenta(x)
+            let ventaVehiculosMiles = formatter.format(ventaVehiculos)
             let gananciaVehiculos = ventaVehiculos - costoVehiculos
+            let gananciaVehiculosMiles = formatter.format(gananciaVehiculos)
+            let cuotasVehiculo = formatter.format(`${vehiculo.cuotasVenta}`)
             let column = document.createElement("div");
             column.className = "col-lg-3 col-sm-6 mt-3 mb-3";
             column.id = `columna-${vehiculo.id}`;
@@ -331,8 +342,9 @@ function mostrarVehiculos(x) {
                         <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
                         <p class="card-text">Kms: <b>${vehiculo.km} kms</b></p>
                         <p class="card-text">Tipo: <b>${vehiculo.tipo}</b></p>
-                        <p class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
+                        <p id="precioCompraCard-${vehiculo.id}" class="card-text">Precio Compra: <b>${vehiculo.precioCompra} U$S</b></p>
                         <p class="card-text">Precio Venta: <b>${vehiculo.precioVenta} U$S</b></p>
+                        <p class="card-text">Precio en 12 cuotas: <b>${cuotasVehiculo} U$S</b></p>
                         <p class="card-text">Vendedor: <b>${vehiculo.user}</b></p>
                     </div>
                     <div class="card-footer text-center">
@@ -344,9 +356,9 @@ function mostrarVehiculos(x) {
     
             contenedorVentas.className ="pb-2"
             contenedorVentas.innerHTML = `
-                <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculos} U$S</b></p>
-                <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculos} U$S</b></p>
-                <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculos} U$S</b></p>
+                <p class="card-text text-center"><b>El costo de los vehículos en pantalla de ${costoVehiculosMiles} U$S.</b></p>
+                <p class="card-text text-center"><b>La venta de los vehículos en pantalla de ${ventaVehiculosMiles} U$S.</b></p>
+                <p class="card-text text-center"><b>La ganancia de los vehículos en pantalla de ${gananciaVehiculosMiles} U$S.</b></p>
                 `
     
             contenedorVehiculos.append(column);
@@ -354,25 +366,27 @@ function mostrarVehiculos(x) {
             let botonModificarPrecio = document.getElementById(`botonModificarPrecio-${vehiculo.id}`)
             let botonEnviarCorreo = document.getElementById(`botonEnviarCorreo-${vehiculo.id}`);
             let botonEliminar = document.getElementById(`botonEliminar-${vehiculo.id}`);
+            let cardPrecioCompra = document.getElementById(`precioCompraCard-${vehiculo.id}`);
 
             botonModificarPrecio.onclick = () => swalModificarPrecio(vehiculo.id);
             botonEnviarCorreo.onclick = () => swalCorreo(vehiculo.id);
             botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
-            userVehiculoCreado (vehiculo.user, botonEnviarCorreo, botonEliminar, botonModificarPrecio)
+            userVehiculoCreado (vehiculo.user, botonEnviarCorreo, botonEliminar, botonModificarPrecio, cardPrecioCompra)
             
             })
     )
 }
 
-//Comprobando usuario logueado vs usuario que creó el vehículo
-function userVehiculoCreado (vehiculoUser, botonEnviar, botonEliminar, botonModificarPrecio) {
+//Comprobando usuario logueado vs usuario que creó el vehículo.
+function userVehiculoCreado (vehiculoUser, botonEnviar, botonEliminar, botonModificarPrecio, cardPrecioCompra) {
 
     if ((vehiculoUser.toUpperCase()) == usuario) {
             botonEnviar.hidden = true
         } else {
             botonEliminar.hidden = true
             botonModificarPrecio.hidden = true
+            cardPrecioCompra.hidden = true
         }
 } 
 
@@ -493,6 +507,7 @@ function obtenerUsuariosStorage () {
     )
 }
 
+//Formulario de correo Test Drive.
 function swalCorreo (idVehiculo) {
     Swal.fire({
         title: 'Solicitud Test Drive',
@@ -541,12 +556,14 @@ function validateEmail(mail)
 //Enviar correo de Test Drive.
 function enviarCorreo (idVehiculo, result) {
     let vehiculoBuscado = vehiculos.find(item => item.id === idVehiculo)
+    let cuotasVehiculo = formatter.format(`${vehiculoBuscado.cuotasVenta}`)
     let templateParams = {
         nombre: `${result.value.nombre.toUpperCase()}`,
         celular: `${result.value.telefono}`,
         mail: `${result.value.mail}`,
         vehiculo: `${vehiculoBuscado.marca} ${vehiculoBuscado.modelo} ${vehiculoBuscado.anio} ID: ${vehiculoBuscado.id}`,
-        image: `${vehiculoBuscado.img}`
+        image: `${vehiculoBuscado.img}`,
+        formaDePago: `El costo del vehículo es de: ${vehiculoBuscado.precioVenta} U$S, puedes hacerlo hasta en 12 pagos de ${cuotasVehiculo} U$S.`
         }
 
     emailjs.send('service_aqd1cxb','template_8y9442d', templateParams)

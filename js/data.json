@@ -13,6 +13,9 @@
             "ocupantes" : 5 ,
             "precioCompra" : "13.500" ,
             "precioVenta" : "27.000" ,
+            "precioCompraNum" : 13500 ,
+            "precioVentaNum" : 27000 ,
+            "cuotasVenta" : 2250 ,
             "user" : "ADMIN" ,
             "img" : "/images/PRIUS.jpg"
         },
@@ -27,6 +30,9 @@
             "ocupantes" : 3 ,
             "precioCompra" : "4.500" ,
             "precioVenta" : "6.750" ,
+            "precioCompraNum" : 4500 ,
+            "precioVentaNum" : 6750 ,
+            "cuotasVenta" : 562.5 ,
             "user" : "ADMIN" ,
             "img" : "/images/107.jpg"
         },
@@ -41,6 +47,9 @@
             "ocupantes" : 5 ,
             "precioCompra" : "25.500" ,
             "precioVenta" : "38.250" ,
+            "precioCompraNum" : 25500 ,
+            "precioVentaNum" : 38250 ,
+            "cuotasVenta" : 3187.5 ,
             "user" : "ADMIN" ,
             "img" : "/images/GOLF.jpg"
         },
@@ -55,6 +64,9 @@
             "ocupantes" : 5 ,
             "precioCompra" : "18.500" ,
             "precioVenta" : "27.750" ,
+            "precioCompraNum" : 18500 ,
+            "precioVentaNum" : 27750 ,
+            "cuotasVenta" : 2312.5 ,
             "user" : "ADMIN" ,
             "img" : "/images/308GT.jpg"
         }
