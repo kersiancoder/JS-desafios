@@ -379,7 +379,7 @@ function mostrarVehiculos(x) {
             let cardPrecioCompra = document.getElementById(`precioCompraCard-${vehiculo.id}`);
 
             botonModificarPrecio.onclick = () => swalModificarPrecio(vehiculo.id);
-            botonEnviarCorreo.onclick = () => swalCorreo(vehiculo.id);
+            botonEnviarCorreo.onclick = () => swalCorreo(vehiculo.id, usuario);
             botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
             userVehiculoCreado (vehiculo.user, botonEnviarCorreo, botonEliminar, botonModificarPrecio, cardPrecioCompra)
@@ -522,7 +522,13 @@ function obtenerUsuariosStorage () {
 }
 
 //Formulario de correo Test Drive.
-function swalCorreo (idVehiculo) {
+function swalCorreo (idVehiculo, usuario) {
+    // if (usuario) {
+    //     let userTestDrive = usuario
+    // } else {
+    //     let userTestDrive = ""
+    // }
+
     Swal.fire({
         title: 'Solicitud Test Drive',
         html: `<input type="text" id="correoNombre" class="swal2-input" placeholder="Nombre">
@@ -533,6 +539,7 @@ function swalCorreo (idVehiculo) {
         confirmButtonText: 'Enviar',
         confirmButtonColor: '#0d6efd',
         focusConfirm: false,
+        didRender: false ,
         preConfirm: () => {
             const nombre = Swal.getPopup().querySelector('#correoNombre').value
             const telefono = Swal.getPopup().querySelector('#correoTelefono').value
@@ -555,6 +562,11 @@ function swalCorreo (idVehiculo) {
             timer: 3000,                timerProgressBar: true
         })
             enviarCorreo(idVehiculo, result)
+    })
+    .catch(error => {
+        Swal.showValidationMessage(
+            `Fallamos en enviar el correo: ${error}`
+        )
     })
 }
 
