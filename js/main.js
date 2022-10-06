@@ -50,20 +50,47 @@ for (var i = ANIOACTUAL.getFullYear(); i >= ANIOACTUAL.getFullYear() - 100 ; i--
 }
 
 //Cargamos por defecto 4 vehículos desde un JSON.
-function cargaJSON () {
-    let jsonToString
-    fetch('./js/data.json')
-    .then(res => res.json())
-    .then(data => {
-        jsonToString = JSON.stringify(data.vehiculos);
+async function cargaJSON () {
+    try {
+        const response = await fetch('./js/data2.json')
+        const data = await response.json()
         if (vehiculos.length == 0) {
-            vehiculos = JSON.parse(jsonToString) 
-            actualizarVehiculosStorage()
-            obtenerVehiculosStorage()
-            mostrarVehiculos(vehiculos)
+            vehiculos = [...data]
+            mostrarVehiculos(data)
         }
-    }) 
-}
+    } catch (error) {
+        console.log(error)
+    }
+} 
+
+
+//Guardamos los vehículos en el JSON.
+/* function enviarJSON(marca, modelo){
+
+    let vehiculosJSON33 = localStorage.getItem("vehiculos")
+
+        vehiculos33 = JSON.parse(vehiculosJSON33)
+
+        console.log(JSON.stringify({vehiculosJSON33}))
+
+
+    fetch('/js/data2.json', {
+        method: 'POST',
+        body: JSON.stringify({vehiculosJSON33}),
+        headers: {
+          'Content-type': 'application/json',
+        }
+        })
+        .then(function(response){ 
+        return response.json()})
+        .then(function(data)
+        {console.log(data)
+        // marca = data.marca
+        // modelo = data.modelo  
+      }).catch(error => console.error('Error:', error)); 
+      
+
+} */
 
 //Clase para crear los vehículos.
 class Vehiculo {
@@ -383,6 +410,8 @@ function mostrarVehiculos(x) {
             botonEliminar.onclick = () => eliminarVehiculo(vehiculo.id);
 
             userVehiculoCreado (vehiculo.user, botonEnviarCorreo, botonEliminar, botonModificarPrecio, cardPrecioCompra)
+
+            // enviarJSON(vehiculo.marca, vehiculo.modelo)
             
             })
     )
