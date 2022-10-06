@@ -52,7 +52,7 @@ for (var i = ANIOACTUAL.getFullYear(); i >= ANIOACTUAL.getFullYear() - 100 ; i--
 //Cargamos por defecto 4 vehículos desde un JSON.
 async function cargaJSON () {
     try {
-        const response = await fetch('./js/data2.json')
+        const response = await fetch('./js/data.json')
         const data = await response.json()
         if (vehiculos.length == 0) {
             vehiculos = [...data]
