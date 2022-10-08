@@ -29,6 +29,7 @@ let filtro1;
 let filtro2;
 let filtro3;
 let filtro4;
+let filtroMisVehiculos
 let filtro5;
 let botonModal
 let botonModalExplicativo
@@ -66,34 +67,6 @@ async function cargaJSON () {
 } 
 
 
-//Guardamos los vehículos en el JSON.
-/* function enviarJSON(marca, modelo){
-
-    let vehiculosJSON33 = localStorage.getItem("vehiculos")
-
-        vehiculos33 = JSON.parse(vehiculosJSON33)
-
-        console.log(JSON.stringify({vehiculosJSON33}))
-
-
-    fetch('/js/data2.json', {
-        method: 'POST',
-        body: JSON.stringify({vehiculosJSON33}),
-        headers: {
-          'Content-type': 'application/json',
-        }
-        })
-        .then(function(response){ 
-        return response.json()})
-        .then(function(data)
-        {console.log(data)
-        // marca = data.marca
-        // modelo = data.modelo  
-      }).catch(error => console.error('Error:', error)); 
-      
-
-} */
-
 //Clase para crear los vehículos.
 class Vehiculo {
     static count = 4;
@@ -112,7 +85,7 @@ class Vehiculo {
         this.precioVentaNum = precioVentaNum
         this.cuotasVenta = cuotasVenta
         this.user = user
-        this.img = `/images/${modelo}.jpgeeeeee`
+        this.img = `/images/${modelo}.jpg`
     }
     calcularCosto = () => this.precioCompraNum
     calcularVenta = () => this.precioVentaNum
@@ -148,6 +121,7 @@ function inicializarElementos() {
     botonModificarPrecio = document.getElementById("botonModificarPrecio")
     botonModalExplicativo = document.getElementById("botonModalExplicativo")
     limpiarStorageTodo = document.getElementById("limpiarStorageTodo")
+    filtroMisVehiculos = document.getElementById("filtroMisVehiculos")
 }
 
 //Inicializamos los eventos.
@@ -192,6 +166,7 @@ function mostrarTextoUsuario () {
     botonModalExplicativo.hidden = false
     contenedorVentas.hidden = false
     limpiarStorageTodo.hidden = false
+    filtroMisVehiculos.hidden = false
 }
 
 //Eliminamos todos los datos de la Storage.
@@ -206,6 +181,7 @@ function eliminarStorage () {
     botonModalExplicativo.hidden = true
     limpiarStorageTodo.hidden = true
     contenedorVentas.hidden = true
+    filtroMisVehiculos.hidden = true
     usuario = 0
     filtro5.click()
 }
@@ -513,50 +489,27 @@ function arrayVacio(array) {
     return false;
 } 
 
-//Si el filtro no encuentra vehículos mostramos en el HTML un texto.
-/* function sinVehiculos() {
-    testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario)
-    if (testUser.length > 0) {
+function sinVehiculos() {
+    let testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario).length
+
+    if (typeof usuario === "undefined" || typeof usuario === "number") {
         contenedorVehiculos.innerHTML = `
             <div class="card">
                 <div class="card-body">
-                    <p class="card-text text-center"><b>El usdsuario ${usuario} no tiene vehículos a la venta.</b></p>
+                    <p class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></p>
                 </div>
             </div>`
         contenedorVentas.innerHTML ="" 
-    } else {
+    }
+    if (typeof usuario === "string") {
         console.log("No hay vehículos que concuerden con el filtro.")
         contenedorVehiculos.innerHTML = `
             <div class="card">
                 <div class="card-body">
-                    <p class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></p>
+                    <p class="card-text text-center"><b>El usuario ${usuario} no tiene vehículos a la venta.</b></p>
                 </div>
             </div>`
         contenedorVentas.innerHTML = ""
-    }
-} */
-function sinVehiculos() {
-    let testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario).length
-
-    if (typeof usuario === 'undefined') {
-        contenedorVehiculos.innerHTML = `
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></p>
-                </div>
-            </div>`
-        contenedorVentas.innerHTML ="" 
-    }
-    if (typeof usuario === 'string') {
-        console.log (typeof usuario)
-    console.log("No hay vehículos que concuerden con el filtro.")
-    contenedorVehiculos.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text text-center"><b>El usuario ${usuario} no tiene vehículos a la venta.</b></p>
-            </div>
-        </div>`
-    contenedorVentas.innerHTML = ""
     } 
     if (testUser > 0) {
         contenedorVehiculos.innerHTML = `
@@ -566,7 +519,8 @@ function sinVehiculos() {
                 </div>
             </div>`
         contenedorVentas.innerHTML ="" 
-    }
+    } 
+
 }
 
 //Guardamos el usuario en Storage.
