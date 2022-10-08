@@ -472,6 +472,10 @@ function eliminarVehiculo (idVehiculo) {
             ejecutarFiltros(vehiculos)
             filtroMisVehiculosActivo()
         }
+        let testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario).length
+        if (testUser == 0) {
+            sinVehiculos()
+        }
     })
 }
 
