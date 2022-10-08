@@ -155,10 +155,15 @@ function identificarUsuario (event) {
     filtro5.click()
 }
 
-//Cambiamos el estado de los contenedores HTML segun usuario.
-function mostrarTextoUsuario () {
+//Detectamos si el usuario tiene vehiculos para mostrar el filtro específico.
+function filtroMisVehiculosActivo() {
     let testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario).length
     testUser == 0 ? filtroMisVehiculos.hidden = true : filtroMisVehiculos.hidden = false
+}
+
+//Cambiamos el estado de los contenedores HTML segun usuario.
+function mostrarTextoUsuario () {
+    filtroMisVehiculosActivo()
     contenedorIdentificacion.hidden = true
     contenedorUsuario.hidden = false
     textoUsuario.hidden = false
@@ -264,7 +269,8 @@ function validarFormulario(event) {
             formulario.reset(),
             actualizarVehiculosStorage(),
             mostrarVehiculos(vehiculos),
-            MODELO.innerHTML = DEFAULT
+            MODELO.innerHTML = DEFAULT,
+            filtroMisVehiculosActivo()
         )
 }
 
@@ -464,6 +470,7 @@ function eliminarVehiculo (idVehiculo) {
             columnaBorrar.remove();
             actualizarVehiculosStorage();
             ejecutarFiltros(vehiculos)
+            filtroMisVehiculosActivo()
         }
     })
 }
