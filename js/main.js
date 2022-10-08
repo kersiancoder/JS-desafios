@@ -35,11 +35,13 @@ let botonModal
 let botonModalExplicativo
 
 
+
 //Constantes de selectores.
 const MARCA = document.querySelectorAll('#select-marca')[0];
 const MODELO = document.querySelectorAll('#select-modelo')[0];
 const DEFAULT = MODELO.innerHTML;
 const ANIO = document.getElementById('inputAnio');
+
 
 //Constante de Año actual.
 const ANIOACTUAL = new Date(); 
@@ -155,6 +157,8 @@ function identificarUsuario (event) {
 
 //Cambiamos el estado de los contenedores HTML segun usuario.
 function mostrarTextoUsuario () {
+    let testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario).length
+    testUser == 0 ? filtroMisVehiculos.hidden = true : filtroMisVehiculos.hidden = false
     contenedorIdentificacion.hidden = true
     contenedorUsuario.hidden = false
     textoUsuario.hidden = false
@@ -166,7 +170,6 @@ function mostrarTextoUsuario () {
     botonModalExplicativo.hidden = false
     contenedorVentas.hidden = false
     limpiarStorageTodo.hidden = false
-    filtroMisVehiculos.hidden = false
 }
 
 //Eliminamos todos los datos de la Storage.
@@ -491,7 +494,6 @@ function arrayVacio(array) {
 
 function sinVehiculos() {
     let testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario).length
-
     if (typeof usuario === "undefined" || typeof usuario === "number") {
         contenedorVehiculos.innerHTML = `
             <div class="card">
