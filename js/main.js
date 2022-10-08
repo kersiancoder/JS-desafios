@@ -1,4 +1,5 @@
 //Variables de información.
+let url = "https://desafiojsmaximilianoheijo.netlify.app"
 let vehiculos = [];
 let usuario;
 let formatter = new Intl.NumberFormat('es-UY');
@@ -28,6 +29,7 @@ let filtro1;
 let filtro2;
 let filtro3;
 let filtro4;
+let filtro5;
 let botonModal
 let botonModalExplicativo
 
@@ -110,7 +112,7 @@ class Vehiculo {
         this.precioVentaNum = precioVentaNum
         this.cuotasVenta = cuotasVenta
         this.user = user
-        this.img = `/images/${modelo}.jpg`
+        this.img = `/images/${modelo}.jpgeeeeee`
     }
     calcularCosto = () => this.precioCompraNum
     calcularVenta = () => this.precioVentaNum
@@ -132,6 +134,7 @@ function inicializarElementos() {
     filtro2 = document.getElementById("filtro2");
     filtro3 = document.getElementById("filtro3");
     filtro4 = document.getElementById("filtro4");    
+    filtro5 = document.getElementById("filtro5");    
     btnLimpiarStorage = document.getElementById("limpiarStorage")
     formularioIdentificacion = document.getElementById("formularioIdentificacion")
     inputUsuario = document.getElementById("inputUsuario")
@@ -173,6 +176,7 @@ function identificarUsuario (event) {
     actualizarUsuarioStorage();
     SwalUsuario(`¡Bienvenido <b>${usuario}!</b>`, "success");
     mostrarTextoUsuario()
+    filtro5.click()
 }
 
 //Cambiamos el estado de los contenedores HTML segun usuario.
@@ -203,7 +207,7 @@ function eliminarStorage () {
     limpiarStorageTodo.hidden = true
     contenedorVentas.hidden = true
     usuario = 0
-    mostrarVehiculos(vehiculos)
+    filtro5.click()
 }
 
 // Creamos el mapa de marcas y modelos.
@@ -368,7 +372,7 @@ function mostrarVehiculos(x) {
             column.id = `columna-${vehiculo.id}`;
             column.innerHTML = `
                 <div class="card">
-                    <img src="${vehiculo.img}" class="card-img-top" alt="${vehiculo.modelo}">
+                    <img src="${url}${vehiculo.img}" class="card-img-top" alt="${vehiculo.modelo}">
                     <div class="card-body">
                         <h5 class="card-title text-center">${vehiculo.marca} ${vehiculo.modelo}</h5>
                         <p class="card-text">Año: <b>${vehiculo.anio}</b></p>
@@ -387,6 +391,7 @@ function mostrarVehiculos(x) {
                 </div>`;
     
             contenedorVentas.className ="pb-2"
+
             costoVehiculos == 0 ? 
                 contenedorVentas.innerHTML = `
                     <p class="card-text text-center"><b>El usuario ${usuario} no tiene vehículos a la venta.</b></p>
@@ -480,7 +485,6 @@ function eliminarVehiculo (idVehiculo) {
             columnaBorrar.remove();
             actualizarVehiculosStorage();
             ejecutarFiltros(vehiculos)
-            mostrarVehiculos(vehiculos)
         }
     })
 }
@@ -490,10 +494,12 @@ function ejecutarFiltros(vehiculos) {
     let vehiculosFiltradosNuevos = vehiculos.filter((vehiculo) => vehiculo.km == 0)
     let vehiculosFiltradosUsados = vehiculos.filter((vehiculo) => vehiculo.km > 0)
     let vehiculosFiltradosOcupantes = vehiculos.filter((vehiculo) => vehiculo.ocupantes > 6)
+    let vehiculosUsuario = vehiculos.filter((vehiculo) => vehiculo.user == usuario) 
     filtro1.onclick = () => mostrarVehiculos(vehiculosFiltradosNuevos)
     filtro2.onclick = () => mostrarVehiculos(vehiculosFiltradosUsados)
     filtro3.onclick = () => mostrarVehiculos(vehiculosFiltradosOcupantes)
-    filtro4.onclick = () => mostrarVehiculos(vehiculos)
+    filtro4.onclick = () => mostrarVehiculos(vehiculosUsuario)
+    filtro5.onclick = () => mostrarVehiculos(vehiculos)
 }
 
 //Chequeamos si un array es un array y si está vacío
@@ -508,7 +514,17 @@ function arrayVacio(array) {
 } 
 
 //Si el filtro no encuentra vehículos mostramos en el HTML un texto.
-function sinVehiculos() {
+/* function sinVehiculos() {
+    testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario)
+    if (testUser.length > 0) {
+        contenedorVehiculos.innerHTML = `
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text text-center"><b>El usdsuario ${usuario} no tiene vehículos a la venta.</b></p>
+                </div>
+            </div>`
+        contenedorVentas.innerHTML ="" 
+    } else {
         console.log("No hay vehículos que concuerden con el filtro.")
         contenedorVehiculos.innerHTML = `
             <div class="card">
@@ -517,6 +533,40 @@ function sinVehiculos() {
                 </div>
             </div>`
         contenedorVentas.innerHTML = ""
+    }
+} */
+function sinVehiculos() {
+    let testUser = vehiculos.filter(vehiculo => vehiculo.user === usuario).length
+
+    if (typeof usuario === 'undefined') {
+        contenedorVehiculos.innerHTML = `
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text text-center"><b>No hay vehículos ingresados o que concuerden con el filtro.</b></p>
+                </div>
+            </div>`
+        contenedorVentas.innerHTML ="" 
+    }
+    if (typeof usuario === 'string') {
+        console.log (typeof usuario)
+    console.log("No hay vehículos que concuerden con el filtro.")
+    contenedorVehiculos.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text text-center"><b>El usuario ${usuario} no tiene vehículos a la venta.</b></p>
+            </div>
+        </div>`
+    contenedorVentas.innerHTML = ""
+    } 
+    if (testUser > 0) {
+        contenedorVehiculos.innerHTML = `
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text text-center"><b>No hay vehículos de ${usuario} que concuerden con el filtro.</b></p>
+                </div>
+            </div>`
+        contenedorVentas.innerHTML ="" 
+    }
 }
 
 //Guardamos el usuario en Storage.
@@ -617,7 +667,7 @@ function enviarCorreo (idVehiculo, result) {
         celular: `${result.value.telefono}`,
         mail: `${result.value.mail}`,
         vehiculo: `${vehiculoBuscado.marca} ${vehiculoBuscado.modelo} ${vehiculoBuscado.anio} ID: ${vehiculoBuscado.id}`,
-        image: `${vehiculoBuscado.img}`,
+        image: `${url}${vehiculoBuscado.img}`,
         formaDePago: `El costo del vehículo es de: ${vehiculoBuscado.precioVenta} U$S, puedes hacerlo hasta en 12 pagos de ${cuotasVehiculo} U$S.`
         }
 

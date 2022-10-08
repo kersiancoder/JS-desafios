@@ -30,7 +30,7 @@
         "precioCompraNum" : 4500 ,
         "precioVentaNum" : 6750 ,
         "cuotasVenta" : 562.5 ,
-        "user" : "ADMIN" ,
+        "user" : "MAXI" ,
         "img" : "/images/107.jpg"
     },
     {
@@ -47,7 +47,7 @@
         "precioCompraNum" : 25500 ,
         "precioVentaNum" : 38250 ,
         "cuotasVenta" : 3187.5 ,
-        "user" : "ADMIN" ,
+        "user" : "MAXI" ,
         "img" : "/images/GOLF.jpg"
     },
     {
